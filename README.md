@@ -54,6 +54,18 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## Bulding Docker container
+
+```bash
+docker build -t angular-docker .
+```
+
+## Running Docker container
+
+```bash
+docker run -it -p 4201:4200 angular-docker
+```
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
