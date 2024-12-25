@@ -14,7 +14,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
-  standalone: true,
   imports: [
     MatToolbarModule,
     MatButtonModule,
