@@ -8,7 +8,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Auth } from '@angular/fire/auth';
+import { authState, AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,16 +24,34 @@ import { RouterOutlet } from '@angular/router';
     MatListModule,
     MatIconModule,
     AsyncPipe,
-    RouterOutlet
+    RouterOutlet,
+    RouterLink
   ]
 })
 export class AppComponent {
   private breakpointObserver = inject(BreakpointObserver);
+
+  private readonly auth = inject(Auth);
+  private readonly authService = inject(AuthService);
+  private router = inject(Router);
+  protected readonly authState = authState(this.auth);
+  protected readonly isLoggedIn = this.authState.pipe(map(u => !!u?.uid));
+  protected readonly links = [
+    {path: '/home-patient', label: 'Home'},
+  ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+
+  async logout() {
+    return await this.authService.logout();
+  }
+
+  isActive(path: string) {
+    return this.router.url.includes(path);
+  }
 }
 
