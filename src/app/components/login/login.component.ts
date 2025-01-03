@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
   private readonly router = inject(Router);
 
   async loginWithGoogle() {
-    if (await this.authService.loginWithGoogle()) {
-      this.router.navigateByUrl("/home-patient"); //TODO change this to different home page in case of different user roles
+    const user = (await this.authService.loginWithGoogle()).user;
+    if (user.email) {
+      this.router.navigateByUrl(`/home-${ await this.userService.isUserProfessional(user.email) ? "professional" : "patient" }`); //TODO change this to different home page in case of different user roles
     }
   }
 }

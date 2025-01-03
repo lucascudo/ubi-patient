@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -6,11 +6,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
-import { authState, AuthService } from './services/auth.service';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Auth, user } from '@angular/fire/auth';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+
+
+type Link = {
+  path: string,
+  label: string
+}
 
 @Component({
   selector: 'app-root',
@@ -28,23 +35,36 @@ import { authState, AuthService } from './services/auth.service';
     RouterLink
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
 
   private readonly auth = inject(Auth);
   private readonly authService = inject(AuthService);
-  private router = inject(Router);
-  protected readonly authState = authState(this.auth);
-  protected readonly isLoggedIn = this.authState.pipe(map(u => !!u?.uid));
-  protected readonly links = [
-    {path: '/home-patient', label: 'Home'},
-  ];
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  protected readonly user$ = user(this.auth);
+  private userSubscription: Subscription;
+  protected links: Link[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+
+  constructor() {
+    this.userSubscription = this.user$.subscribe(async (user) => {
+      if (user?.email) {
+        this.links = [
+          {path: `/home-${ await this.userService.isUserProfessional(user.email) ? "professional" : "patient" }`, label: "Home"},
+        ];
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
 
   async logout() {
     return await this.authService.logout();

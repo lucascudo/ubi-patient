@@ -1,4 +1,4 @@
-@if (isLoggedIn | async) {
+@if (user$ | async) {
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" fixedInViewport
         [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -16,7 +16,7 @@
       <mat-toolbar color="primary">
         @if (isHandset$ | async) {
           <button
-            type="button"ß
+            type="button"
             aria-label="Toggle sidenav"
             mat-icon-button
             (click)="drawer.toggle()">
