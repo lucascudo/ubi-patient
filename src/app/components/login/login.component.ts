@@ -21,7 +21,7 @@ export class LoginComponent {
   async loginWithGoogle() {
     const user = (await this.authService.loginWithGoogle()).user;
     if (user.email) {
-      this.router.navigateByUrl(`/home-${ await this.userService.isUserProfessional(user.email) ? "professional" : "patient" }`); //TODO change this to different home page in case of different user roles
+      this.router.navigateByUrl(`/home-${ await this.userService.isUserProfessional(user.email) ? "professional" : "patient" }`);
     }
   }
 }

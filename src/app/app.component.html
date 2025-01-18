@@ -9,7 +9,7 @@
           @for (link of links; track link) {
             <a mat-list-item routerLink="{{ link.path }}" [activated]="isActive(link.path)">{{ link.label }}</a>
           }
-          <a mat-list-item href="#" (click)="logout()">Logout</a>
+          <a mat-list-item href="#" (click)="logout()">Sair</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
