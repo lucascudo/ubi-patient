@@ -3,6 +3,7 @@ import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, Document
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { Entity } from '../interfaces/entity';
+import { CryptService } from './crypt.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { Entity } from '../interfaces/entity';
 export class EntityService {
   private firestore = inject(Firestore);
   private userService = inject(UserService);
+  private cryptService = inject(CryptService);
   private entityCollection: any;
   private userId: string = '';
   private ready = false;
@@ -33,8 +35,9 @@ export class EntityService {
 
   async addEntity(entity: any): Promise<DocumentReference> {
     const createdAt = new Date();
+    const encryptedEntity: any = this.cryptService.encryptObject(entity);
     return addDoc(this.entityCollection, {
-      ...entity,
+      ...encryptedEntity,
       createdAt,
     });
   }

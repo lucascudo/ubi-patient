@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { map, Observable, shareReplay, timestamp } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CryptService } from '../../services/crypt.service';
 
 @Component({
   selector: 'app-home-patient',
@@ -35,8 +36,10 @@ export class HomePatientComponent implements OnInit {
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
   protected entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma'];
-  private entityService = inject(EntityService);
   readonly dialog = inject(MatDialog);
+  private breakpointObserver = inject(BreakpointObserver);
+  private entityService = inject(EntityService);
+  private cryptService = inject(CryptService);
   protected entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     timestamp: new FormControl('', Validators.required), 
@@ -47,13 +50,13 @@ export class HomePatientComponent implements OnInit {
     description: new FormControl('', Validators.maxLength(500)),
     image: new FormControl(),
   });
-  private breakpointObserver = inject(BreakpointObserver);
 
   ngOnInit() {
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
-      this.entityService.getEntities().subscribe((data: Entity[]) => {
-        this.dataSource = data.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
+      this.entityService.getEntities().subscribe((data: any[]) => {
+        const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
+        this.dataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
       });
       clearInterval(interval);
     }, 200);
