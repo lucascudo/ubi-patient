@@ -11,7 +11,6 @@ import { EntityService } from '../../services/entity.service';
 import { Entity } from '../../interfaces/entity';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { map, Observable, shareReplay, timestamp } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CryptService } from '../../services/crypt.service';
 
@@ -33,14 +32,16 @@ import { CryptService } from '../../services/crypt.service';
   ]
 })
 export class HomePatientComponent implements OnInit {
+  private readonly dialog = inject(MatDialog);
+  private readonly baseColumns = ['type', 'name', 'timestamp']
+  private readonly breakpointObserver = inject(BreakpointObserver);
+  private readonly entityService = inject(EntityService);
+  private readonly cryptService = inject(CryptService);
+  protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
-  protected entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma'];
-  readonly dialog = inject(MatDialog);
-  private breakpointObserver = inject(BreakpointObserver);
-  private entityService = inject(EntityService);
-  private cryptService = inject(CryptService);
-  protected entityForm = new FormGroup({
+  protected readonly entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma'];
+  protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     timestamp: new FormControl('', Validators.required), 
     name: new FormControl('', [
@@ -56,14 +57,14 @@ export class HomePatientComponent implements OnInit {
       if (!this.entityService.isReady()) return;
       this.entityService.getEntities().subscribe((data: any[]) => {
         const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
-        this.dataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
+        this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
+        this.dataSource = [ ...this.defaultDataSource ];
       });
       clearInterval(interval);
     }, 200);
     this.breakpointObserver.observe(Breakpoints.Handset).subscribe(result => {
-      const baseColumns = ['type', 'name', 'timestamp'];
-      const handsetColumns = baseColumns.concat(['actions']);
-      const allColumns = baseColumns.concat(['description', 'image', 'actions']);
+      const handsetColumns = this.baseColumns.concat(['actions']);
+      const allColumns = this.baseColumns.concat(['description', 'image', 'actions']);
       this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
     });
   }
@@ -105,6 +106,7 @@ export class HomePatientComponent implements OnInit {
       this.entityForm.patchValue({ image });
     }
   }
+  
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
@@ -116,6 +118,21 @@ export class HomePatientComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.removeEntity(index);
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    if (filterValue) {
+      this.dataSource = this.defaultDataSource.filter(entity => {
+        const searchableColumns = this.baseColumns.concat(['description']);
+        for (let key of searchableColumns) {
+          if (entity[key].trim().toLowerCase().includes(filterValue)) return true;
+        }
+        return false;
+      });
+    } else {
+      this.dataSource = [ ...this.defaultDataSource ];
+    }
   }
 
   removeEntity(index: number) {
