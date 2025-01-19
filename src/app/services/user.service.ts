@@ -22,4 +22,5 @@ export class UserService {
   getUser(): Promise<User | null> {
     return firstValueFrom(this.user$);
   }
+
 }

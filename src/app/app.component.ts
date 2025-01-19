@@ -68,12 +68,13 @@ export class AppComponent implements OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  async logout() {
-    return await this.authService.logout();
-  }
-
   isActive(path: string) {
     return this.router.url.includes(path);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl("/login");
   }
 }
 

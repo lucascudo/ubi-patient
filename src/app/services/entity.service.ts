@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, DocumentReference } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
+import { Entity } from '../interfaces/entity';
 
 @Injectable({
   providedIn: 'root',
@@ -31,32 +32,11 @@ export class EntityService {
   }
 
   async addEntity(entity: any): Promise<DocumentReference> {
-    console.log(entity);
-    if (entity.image) {
-      const reader = new FileReader();
-      return new Promise((resolve, reject) => {
-        reader.onload = () => {
-          const base64Image = reader.result as string;
-          const entityWithImage = {
-            type: entity.type,
-            name: entity.name,
-            description: entity.description,
-            image: base64Image,
-          };
-          addDoc(this.entityCollection, entityWithImage).then(resolve).catch(reject);
-        };
-        reader.onerror = (error) => reject(error);
-        reader.readAsDataURL(entity.image);
-      });
-    } else {
-      const entityWithoutImage = {
-        type: entity.type,
-        name: entity.name,
-        description: entity.description,
-        image: null,
-      };
-      return addDoc(this.entityCollection, entityWithoutImage);
-    }
+    const createdAt = new Date();
+    return addDoc(this.entityCollection, {
+      ...entity,
+      createdAt,
+    });
   }
 
   async deleteEntity(entity: any): Promise<void> {
