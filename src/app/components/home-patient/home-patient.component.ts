@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CryptService } from '../../services/crypt.service';
+import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
 
 @Component({
   selector: 'app-home-patient',
@@ -117,6 +118,12 @@ export class HomePatientComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.removeEntity(index);
+    });
+  }
+  
+  openDetailsDialog(index: number): void {
+    this.dialog.open(EntityViewDialogComponent, {
+      data: this.dataSource[index]
     });
   }
 
