@@ -6,7 +6,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { EntityService } from '../../services/entity.service';
 import { Entity } from '../../interfaces/entity';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +26,6 @@ import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dia
     MatSelectModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
   ]
@@ -112,12 +110,13 @@ export class HomePatientComponent implements OnInit {
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
     const article = (entity.type === 'Sintoma') ? 'o' : 'a';
+    const content = `Desejas realmente remover ${article} ${entity.type}: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { question: `Desejas realmente excluir ${article} ${entity.type}: ${entity.name}?` },
+      data: { title: 'Confirmação de Remoção', content },
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.removeEntity(index);
+      if (result) this.entityService.deleteEntity(entity);
     });
   }
   
@@ -140,9 +139,5 @@ export class HomePatientComponent implements OnInit {
     } else {
       this.dataSource = [ ...this.defaultDataSource ];
     }
-  }
-
-  removeEntity(index: number) {
-    this.entityService.deleteEntity(this.dataSource[index]);
   }
 }

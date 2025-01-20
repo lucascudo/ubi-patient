@@ -1,5 +1,5 @@
 <section class="container">
-  <h1>Cadastro de Entidades</h1>
+  <h4>Cadastro de Entidades</h4>
 
   <form [formGroup]="entityForm" #formDirective="ngForm" (ngSubmit)="addEntity(formDirective, fileInput)" class="entity-form">
     <mat-form-field appearance="outline">
@@ -46,11 +46,11 @@
     <button mat-raised-button color="primary" type="submit" [disabled]="!entityForm.valid">Adicionar</button>
   </form>
 
-  @if (dataSource.length) {
+  @if (defaultDataSource.length) {
 
     <mat-form-field class="search-input" appearance="outline">  
       <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)">
+      <input matInput #filterInput (keyup)="applyFilter($event)">
     </mat-form-field>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

@@ -8,7 +8,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import { ConfirmationDialogData } from '../../interfaces/confirmation-dialog-data';
+import { DialogData } from '../../interfaces/dialog-data';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -26,7 +26,7 @@ import { ConfirmationDialogData } from '../../interfaces/confirmation-dialog-dat
 })
 export class ConfirmationDialogComponent {
   readonly dialogRef = inject(MatDialogRef<ConfirmationDialogComponent>);
-  readonly data = inject<ConfirmationDialogData>(MAT_DIALOG_DATA);
+  readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   
   onNoClick(): void {
     this.dialogRef.close();

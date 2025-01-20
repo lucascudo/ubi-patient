@@ -4,10 +4,12 @@ import { LoginComponent } from './components/login/login.component';
 import { authGuard } from './guards/auth.guard';
 import { HomeProfessionalComponent } from './components/home-professional/home-professional.component';
 import { loginGuard } from './guards/login.guard';
+import { PatientProfessionalsComponent } from './components/patient-professionals/patient-professionals.component';
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent,canActivate: [loginGuard]},
   {path: 'home-patient', component: HomePatientComponent, canActivate: [authGuard], data: { role: 'patient' }},
+  {path: 'patient-professionals', component: PatientProfessionalsComponent, canActivate: [authGuard], data: { role: 'patient' }},
   {path: 'home-professional', component: HomeProfessionalComponent, canActivate: [authGuard], data: { role: 'professional' }},
   {path: '**', redirectTo: 'home-patient'}
 ];

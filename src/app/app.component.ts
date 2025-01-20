@@ -59,6 +59,7 @@ export class AppComponent implements OnDestroy {
           {path: "/home-professional", label: "Início"},
         ] : [
           {path: "/home-patient", label: "Início"},
+          {path: "/patient-professionals", label: "Meus profissionais"},
         ];
       }
     });

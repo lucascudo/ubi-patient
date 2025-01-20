@@ -25,15 +25,15 @@ export class EntityService {
     });
   }
 
-  isReady(): boolean {
+  isReady() {
     return this.ready;
   }
 
-  getEntities(): Observable<any[]> {
+  getEntities() {
     return collectionData(this.entityCollection, { idField: "id" });
   }
 
-  async addEntity(entity: any): Promise<DocumentReference> {
+  addEntity(entity: any) {
     const createdAt = new Date();
     const encryptedEntity: any = this.cryptService.encryptObject(entity);
     return addDoc(this.entityCollection, {
@@ -42,7 +42,7 @@ export class EntityService {
     });
   }
 
-  async deleteEntity(entity: any): Promise<void> {
-    await deleteDoc(doc(this.firestore, `entities-${this.userId}/${entity.id}`));
+  deleteEntity(entity: any) {
+    deleteDoc(doc(this.firestore, `entities-${this.userId}/${entity.id}`));
   }
 }
