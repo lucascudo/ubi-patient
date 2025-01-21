@@ -1,6 +1,11 @@
+@use '@angular/material' as mat;
+
+$theme: mat.define-theme(( color: ( primary: mat.$azure-palette ) ));
+
 :root {
   mat-toolbar {
-    --mat-toolbar-container-background-color: #0c2340;
+    --mat-toolbar-container-background-color: #{mat.get-theme-color($theme, primary, 40)};
+    /* --mat-toolbar-container-background-color: #0c2340; */
   }
 }
 
