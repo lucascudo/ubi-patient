@@ -34,7 +34,7 @@ export class ProfessionalsService {
     return collectionData(this.professionalCollection, { idField: 'id' });
   }
 
-  createInvite(email: string) {
+  createAccess(email: string) {
     const now = new Date();
     const access: Access = this.cryptService.encryptObject({
       id: this.userId,

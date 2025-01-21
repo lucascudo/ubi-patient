@@ -39,7 +39,7 @@ export class HomePatientComponent implements OnInit {
   protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
-  protected readonly entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma'];
+  protected readonly entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma', 'Cosmético'];
   protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     timestamp: new FormControl('', Validators.required), 
@@ -109,8 +109,8 @@ export class HomePatientComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    const article = (entity.type === 'Sintoma') ? 'o' : 'a';
-    const content = `Desejas realmente remover ${article} ${entity.type}: ${entity.name}?`;
+    const article = ['Cosmético', 'Sintoma'].includes(entity.type) ? 'o' : 'a';
+    const content = `Remover ${article} ${entity.type}: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Confirmação de Remoção', content },
     });

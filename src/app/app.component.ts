@@ -56,9 +56,9 @@ export class AppComponent implements OnDestroy {
     this.userSubscription = this.user$.subscribe(async (user) => {
       if (user?.email) {
         this.links = await this.userService.isUserProfessional(user.email) ? [
-          {path: "/home-professional", label: "Início"},
+          {path: "/home-professional", label: "Meus pacientes"},
         ] : [
-          {path: "/home-patient", label: "Início"},
+          {path: "/home-patient", label: "Meus eventos"},
           {path: "/patient-professionals", label: "Meus profissionais"},
         ];
       }

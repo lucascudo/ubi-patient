@@ -83,7 +83,7 @@ export class PatientProfessionalsComponent implements OnInit {
     }
     if (!await this.userService.isUserProfessional(email)) {
       this.dialog.open(AlertDialogComponent, {
-        data: { content: `Não foi encontrado nenhuma profissional com o email: ${email}!` },
+        data: { content: `Não foi encontrado nenhum profissional com o email: ${email}!` },
       });
       return;
     }
@@ -93,7 +93,7 @@ export class PatientProfessionalsComponent implements OnInit {
 
     confirmationDialogRef.afterClosed().subscribe(result => {
       if (!result) return;
-      this.professionalService.createInvite(email);
+      this.professionalService.createAccess(email);
       this.invitationForm.reset();
       formDirective.resetForm();
     });
@@ -120,7 +120,7 @@ export class PatientProfessionalsComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const access = this.dataSource[index];
-    const content = `Desejas remover o acesso de ${access.professional} definitivamente?`;
+    const content = `Remover o acesso de ${access.professional} definitivamente?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Confirmação de Remoção', content },
     });

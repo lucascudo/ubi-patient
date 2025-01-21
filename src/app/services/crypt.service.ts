@@ -17,7 +17,7 @@ export class CryptService {
   encryptObject(object: any, excludes: string[] = []): any {
     const encryptedObject: any = {};
     for (let key of Object.keys(object)) {
-      encryptedObject[key] = (this.reservedKeys.includes(key) || excludes.includes(key)) ? object[key] : this.encryptString(object[key]);
+      encryptedObject[key] = (this.reservedKeys.concat(excludes).includes(key)) ? object[key] : this.encryptString(object[key]);
     }
     return encryptedObject;
   }
@@ -31,7 +31,7 @@ export class CryptService {
   decryptObject(encryptedObject: any, excludes: string[] = []): any {
     const object: any = {};
     for (let key of Object.keys(encryptedObject)) {
-      object[key] = (this.reservedKeys.includes(key) || excludes.includes(key)) ? encryptedObject[key] : this.decryptString(encryptedObject[key]);
+      object[key] = (this.reservedKeys.concat(excludes).includes(key)) ? encryptedObject[key] : this.decryptString(encryptedObject[key]);
     }
     return object;
   }
