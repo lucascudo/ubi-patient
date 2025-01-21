@@ -20,7 +20,10 @@
       }
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!invitationForm.valid">Ceder acesso</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!invitationForm.valid">
+      <mat-icon>person_add</mat-icon>
+      Ceder acesso
+    </button>
   </form>
 
   @if (defaultDataSource.length) {

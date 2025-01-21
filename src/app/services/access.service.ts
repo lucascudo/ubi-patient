@@ -36,7 +36,7 @@ export class AccessService {
 
   protected _updatedAcceptance(email: string, userId: string, accepted: boolean, changer: string) {
     const now = new Date();
-    const field = (changer === 'professional') ? 'patientAcceptedAt' : 'patientAcceptedAt';
+    const field = (changer === 'professional') ? 'professionalAcceptedAt' : 'patientAcceptedAt';
     const access = this.cryptService.encryptObject({
       [field]: (accepted) ? now.toISOString().slice(0, 16) : null,
       updatedAt: now.toISOString().slice(0, 16),

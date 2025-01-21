@@ -12,7 +12,7 @@ export class PatientService extends AccessService {
   private patients: any[] = [];
   private userService = inject(UserService);
   private professionalRef: any;
-  private type = 'patient';
+  private type = 'professional';
   private email: string = '';
   private ready = false;
 
@@ -41,6 +41,7 @@ export class PatientService extends AccessService {
 
   createAccess(email: string) {
     const userId = this.patients.filter(p => p.email == email).map(p => p.id).pop();
+    if (!userId) return;
     return this._createAccess(this.email, email, userId, this.type);
   }
   
