@@ -29,7 +29,14 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Data</mat-label>
-      <input matInput formControlName="timestamp" type="datetime-local"/>
+      <input matInput formControlName="timestamp" type="datetime-local" [max]="today.toISOString().slice(0, 19)"/>
+      
+      @if (entityForm.get('timestamp')?.hasError('required')) {
+        <mat-error>Data é obrigatória</mat-error>
+      }
+      @if (entityForm.get('timestamp')?.hasError('future')) {
+        <mat-error>Data não pode ser no futuro</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">

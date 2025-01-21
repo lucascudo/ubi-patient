@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, FormGroupDirective, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -39,15 +39,32 @@ export class HomePatientComponent implements OnInit {
   protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
-  protected readonly entityTypes = ['Medicação', 'Hervanária', 'Alergia', 'Intolerância', 'Sintoma', 'Cosmético'];
+  protected today = new Date();
+  protected readonly entityTypes = [
+    'Alergia',
+    'Cirurgia',
+    'Cosmético',
+    'Exame',
+    'Hervanária',
+    'Intolerância',
+    'Medicação',
+    'Procedimento',
+    'Sintoma',
+  ];
   protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
-    timestamp: new FormControl('', Validators.required), 
+    description: new FormControl('', Validators.maxLength(500)),
     name: new FormControl('', [
       Validators.required,
       Validators.maxLength(50),
     ]),
-    description: new FormControl('', Validators.maxLength(500)),
+    timestamp: new FormControl('', [
+      Validators.required,
+      (control: AbstractControl): ValidationErrors | null => {
+        const isFuture = new Date(control.value) > new Date(this.today);
+        return isFuture ? { future: {value: control.value} } : null;
+      }
+    ]), 
     image: new FormControl(),
   });
 
@@ -66,6 +83,7 @@ export class HomePatientComponent implements OnInit {
       const allColumns = this.baseColumns.concat(['description', 'image', 'actions']);
       this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
     });
+    this.today.setHours(23, 59, 59);
   }
 
   addEntity(formDirective: FormGroupDirective, fileInput: HTMLInputElement) {
@@ -109,7 +127,7 @@ export class HomePatientComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    const article = ['Cosmético', 'Sintoma'].includes(entity.type) ? 'o' : 'a';
+    const article = ['Cosmético', 'Exame', 'Procedimento', 'Sintoma'].includes(entity.type) ? 'o' : 'a';
     const content = `Remover ${article} ${entity.type}: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Confirmação de Remoção', content },
