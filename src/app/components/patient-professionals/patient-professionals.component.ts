@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { UserService } from '../../services/user.service';
 import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
-import { ProfessionalsService } from '../../services/professionals.service';
+import { ProfessionalService } from '../../services/professional.service';
 import { CryptService } from '../../services/crypt.service';
 import { Access } from '../../interfaces/access';
 import { MatTableModule } from '@angular/material/table';
@@ -35,7 +35,7 @@ export class PatientProfessionalsComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
   private readonly userService = inject(UserService);
   private readonly cryptService = inject(CryptService);
-  private readonly professionalService = inject(ProfessionalsService);
+  private readonly professionalService = inject(ProfessionalService);
   private readonly breakpointObserver = inject(BreakpointObserver);
   protected  displayedColumns: string[] = [];
   protected defaultDataSource: any[] = [];
@@ -43,6 +43,7 @@ export class PatientProfessionalsComponent implements OnInit {
   protected readonly invitationForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
+      Validators.email,
       Validators.maxLength(50),
       (control: AbstractControl): ValidationErrors | null => {
         const isRepeated = this.defaultDataSource.map(a => a.professional).includes(control.value);
@@ -61,7 +62,7 @@ export class PatientProfessionalsComponent implements OnInit {
           const data = professionals
             .filter(p => Object.keys(p).includes(userId))
             .map((access) => ({ ...access[userId], professional: access.id }));
-          const decryptedData: Access[] = data.map(entity => this.cryptService.decryptObject(entity, ['professional']));
+          const decryptedData: Access[] = data.map(access => this.cryptService.decryptObject(access, ['professional']));
           this.defaultDataSource = decryptedData.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt)).reverse();
           this.dataSource = [ ...this.defaultDataSource ];
         });
@@ -83,7 +84,7 @@ export class PatientProfessionalsComponent implements OnInit {
     }
     if (!await this.userService.isUserProfessional(email)) {
       this.dialog.open(AlertDialogComponent, {
-        data: { content: `Não foi encontrado nenhum profissional com o email: ${email}!` },
+        data: { content: `Não foi encontrado nenhum profissional com o email: ${email}` },
       });
       return;
     }
@@ -102,10 +103,10 @@ export class PatientProfessionalsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (filterValue) {
-      this.dataSource = this.defaultDataSource.filter(entity => {
+      this.dataSource = this.defaultDataSource.filter(access => {
         const searchableColumns = ['email'];
         for (let key of searchableColumns) {
-          if (entity[key].trim().toLowerCase().includes(filterValue)) return true;
+          if (access[key].trim().toLowerCase().includes(filterValue)) return true;
         }
         return false;
       });
@@ -126,7 +127,7 @@ export class PatientProfessionalsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.professionalService.deleteAccess(access.professional, access.id);
+      if (result) this.professionalService.deleteAccess(access.professional);
     });
   }
 }

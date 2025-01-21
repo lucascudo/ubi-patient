@@ -36,8 +36,8 @@ export class AuthService {
     return await signOut(this.auth);
   }
 
-  async loginWithGoogle() {
-    return await signInWithPopup(this.auth, new GoogleAuthProvider());
+  loginWithGoogle() {
+    return signInWithPopup(this.auth, new GoogleAuthProvider());
   }
 
   isLoggedIn() {

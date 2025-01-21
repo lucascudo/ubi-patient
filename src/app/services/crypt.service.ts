@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class CryptService {
-  private readonly reservedKeys = ['id'];
+  private readonly reservedKeys = ['id', 'lastLogin'];
 
   encryptString(data: string): string {
     if (!data?.length) return data;

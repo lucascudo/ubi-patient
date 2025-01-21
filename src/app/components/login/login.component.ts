@@ -21,7 +21,9 @@ export class LoginComponent {
   async loginWithGoogle() {
     const user = (await this.authService.loginWithGoogle()).user;
     if (user.email) {
-      this.router.navigateByUrl(`/home-${ await this.userService.isUserProfessional(user.email) ? "professional" : "patient" }`);
+      const isProfessional = await this.userService.isUserProfessional(user.email);
+      this.userService.logAuth(user, isProfessional);
+      this.router.navigateByUrl(`/home-${ isProfessional ? "professional" : "patient" }`);
     }
   }
 }

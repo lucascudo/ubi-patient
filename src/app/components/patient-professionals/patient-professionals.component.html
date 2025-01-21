@@ -10,6 +10,10 @@
       @if (invitationForm.get('email')?.hasError('required')) {
         <mat-error>E-mail é obrigatório</mat-error>
       }
+      
+      @if (invitationForm.get('email')?.hasError('email')) {
+        <mat-error>E-mail inválido</mat-error>
+      }
 
       @if (invitationForm.get('email')?.hasError('repeated')) {
         <mat-error>O profissional: {{ invitationForm.value.email }} já está em sua lista</mat-error>

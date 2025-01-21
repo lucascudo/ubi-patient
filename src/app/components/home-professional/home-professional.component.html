@@ -1,3 +1,77 @@
 <section class="container">
-  <p>Ahoy professional!</p>
+  <h4>Solicitar Acesso a Dados de Utente</h4>
+
+  <form [formGroup]="invitationForm" #formDirective="ngForm" (ngSubmit)="addInvitation(formDirective)" class="access-form">
+    <mat-form-field appearance="outline">
+      <mat-label>E-mail</mat-label>
+      <input matInput type="email" formControlName="email" maxlength="50"/>
+      <mat-hint align="end">{{invitationForm.value.email?.length}} / 50</mat-hint>
+      
+      @if (invitationForm.get('email')?.hasError('required')) {
+        <mat-error>E-mail é obrigatório</mat-error>
+      }
+      
+      @if (invitationForm.get('email')?.hasError('email')) {
+        <mat-error>E-mail inválido</mat-error>
+      }
+
+      @if (invitationForm.get('email')?.hasError('repeated')) {
+        <mat-error>O utente: {{ invitationForm.value.email }} já está em sua lista</mat-error>
+      }
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!invitationForm.valid">Ceder acesso</button>
+  </form>
+
+  @if (defaultDataSource.length) {
+
+    <mat-form-field class="search-input" appearance="outline">  
+      <mat-label>Filtrar</mat-label>
+      <input matInput #filterInput (keyup)="applyFilter($event)">
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="patient">
+        <th mat-header-cell *matHeaderCellDef> E-mail </th>
+        <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="patientAccepted">
+        <th mat-header-cell *matHeaderCellDef> Aceite pelo utente </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-button-toggle-group name="patientAccepted" hideSingleSelectionIndicator disabled aria-label="Aceito pelo utente">
+            <mat-button-toggle [checked]="element.patientAcceptedAt">Sim</mat-button-toggle>
+            <mat-button-toggle [checked]="!element.patientAcceptedAt">Não</mat-button-toggle>
+          </mat-button-toggle-group>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="professionalAccepted">
+        <th mat-header-cell *matHeaderCellDef> Aceite pelo profissional </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-button-toggle-group name="professionalAccepted" (change)="changeAcceptance(element.id, $event)" hideSingleSelectionIndicator aria-label="Aceito pelo profissional">
+            <mat-button-toggle value="1" [checked]="element.professionalAcceptedAt">Sim</mat-button-toggle>
+            <mat-button-toggle value="" [checked]="!element.professionalAcceptedAt">Não</mat-button-toggle>
+          </mat-button-toggle-group>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef> Atualizado em </th>
+        <td mat-cell *matCellDef="let element"> {{ element.updatedAt }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button mat-icon-button color="warn" title="Remover" (click)="openDeletionDialog(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  }
 </section>

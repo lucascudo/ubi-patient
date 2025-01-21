@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, User, user } from '@angular/fire/auth';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { firstValueFrom } from 'rxjs';
+import { CryptService } from './crypt.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class UserService {
 
   private readonly firestore = inject(Firestore);
   private readonly auth = inject(Auth);
+  private readonly cryptService = inject(CryptService);
   private readonly user$ = user(this.auth);
 
   constructor() { }
@@ -21,6 +23,18 @@ export class UserService {
 
   getUser(): Promise<User | null> {
     return firstValueFrom(this.user$);
+  }
+
+  logAuth(user: User, isProfessional: boolean) {
+    const now = new Date();
+    if (!user?.email) return;
+    if (isProfessional) {
+      return setDoc(doc(this.firestore, `professionals/${user.email}`), { lastLogin: now }, { merge: true });
+    }
+    return setDoc(doc(this.firestore, `patients/${user.uid}`), {
+      email: this.cryptService.encryptString(user.email),
+      lastLogin: now
+    });
   }
 
 }
