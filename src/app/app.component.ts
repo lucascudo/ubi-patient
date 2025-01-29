@@ -6,18 +6,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Auth, user } from '@angular/fire/auth';
+import { Auth, Unsubscribe, user } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { Link } from './interfaces/link';
+import { PatientService } from './services/patient.service';
+import { ProfessionalService } from './services/professional.service';
+import { onSnapshot } from '@angular/fire/firestore';
 
-
-type Link = {
-  path: string,
-  label: string
-}
 
 @Component({
   selector: 'app-root',
@@ -30,6 +30,7 @@ type Link = {
     MatSidenavModule,
     MatListModule,
     MatIconModule,
+    MatBadgeModule,
     AsyncPipe,
     RouterOutlet,
     RouterLink
@@ -41,9 +42,12 @@ export class AppComponent implements OnDestroy {
   private readonly auth = inject(Auth);
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
+  private readonly patientService = inject(PatientService);
+  private readonly professionalService = inject(ProfessionalService);
   private readonly router = inject(Router);
+  private subscriptions: Subscription[] = [];
+  private unsubscriptions: Unsubscribe[] = [];
   protected readonly user$ = user(this.auth);
-  private userSubscription: Subscription;
   protected links: Link[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -53,20 +57,36 @@ export class AppComponent implements OnDestroy {
     );
 
   constructor() {
-    this.userSubscription = this.user$.subscribe(async (user) => {
-      if (user?.email) {
-        this.links = await this.userService.isUserProfessional(user.email) ? [
-          {path: "/home-professional", label: "Meus pacientes"},
-        ] : [
-          {path: "/home-patient", label: "Meus eventos"},
-          {path: "/patient-professionals", label: "Meus profissionais"},
-        ];
+    this.subscriptions.push(this.user$.subscribe(async (user) => {
+      if (!user?.email) return;
+      if (await this.userService.isUserProfessional(user.email)) {
+        this.unsubscriptions.push(onSnapshot(this.patientService.getProfessionalRef(), (professional: any) => {
+          const patients = this.patientService.getPatientsFromProfessional(professional);
+          const count = patients.filter(access => !access.professionalAcceptedAt).length;
+          const badge = count ? count.toString() : '';
+          this.links = [
+            {path: "/home-professional", label: "Meus pacientes", badge},
+          ];
+        }));
+      } else {
+        this.subscriptions.push(this.professionalService.getProfessionals().subscribe((professionals: any[]) => {
+          const professionalsWaitingAcceptance = professionals
+            .filter(p => Object.keys(p).includes(user.uid))
+            .map((professional: any) => professional[user.uid])
+            .filter(access => !access.patientAcceptedAt).length;
+          const badge = professionalsWaitingAcceptance ? professionalsWaitingAcceptance.toString() : '';
+          this.links = [
+            {path: "/home-patient", label: "Meus eventos"},
+            {path: "/patient-professionals", label: "Meus profissionais", badge},
+          ];
+        }));
       }
-    });
+    }));
   }
 
   ngOnDestroy() {
-    this.userSubscription.unsubscribe();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.unsubscriptions.forEach(unsubscribe => unsubscribe());
   }
 
   isActive(path: string) {

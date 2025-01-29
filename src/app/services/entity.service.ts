@@ -17,7 +17,7 @@ export class EntityService {
   private ready = false;
 
   constructor() {
-    this.userService.getUser().then(user => {
+    this.userService.getUserFirstValue().then(user => {
       if (!user) return;
       this.userId = user.uid;
       this.entityCollection = collection(this.firestore, `entities-${this.userId}`);

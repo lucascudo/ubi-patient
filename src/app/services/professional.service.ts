@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { collection, collectionData } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProfessionalService extends AccessService {
   constructor() {
     super();
     this.professionalCollection = collection(this.firestore, 'professionals');
-    this.userService.getUser().then(user => {
+    this.userService.getUserObservable().subscribe(user => {
       if (!user?.email) return;
       this.userId = user.uid;
       this.email = user.email;

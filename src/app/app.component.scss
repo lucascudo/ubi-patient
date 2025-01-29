@@ -19,3 +19,7 @@
 .white-colored {
   color: white;
 }
+
+:host ::ng-deep .mdc-list-item__content {
+  overflow: visible;
+}

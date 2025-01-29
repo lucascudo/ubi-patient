@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Auth, User, user } from '@angular/fire/auth';
 import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { CryptService } from './crypt.service';
 
 @Injectable({
@@ -10,8 +10,8 @@ import { CryptService } from './crypt.service';
 export class UserService {
 
   private readonly firestore = inject(Firestore);
-  private readonly auth = inject(Auth);
   private readonly cryptService = inject(CryptService);
+  private readonly auth = inject(Auth);
   private readonly user$ = user(this.auth);
 
   constructor() { }
@@ -21,8 +21,12 @@ export class UserService {
     return !!(await getDoc(docRef)).data();
   }
 
-  getUser(): Promise<User | null> {
-    return firstValueFrom(this.user$);
+  getUserObservable(): Observable<User | null> {
+    return this.user$;
+  }
+
+  getUserFirstValue(): Promise<User | null> {
+    return firstValueFrom(this.getUserObservable());
   }
 
   logAuth(user: User, isProfessional: boolean) {

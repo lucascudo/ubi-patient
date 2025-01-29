@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc, getDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
 
@@ -14,11 +14,12 @@ export class PatientService extends AccessService {
   private type = 'professional';
   private email: string = '';
   private ready = false;
+  
 
   constructor() {
     super();
     this.patientCollection.subscribe(patients => this.patients = patients.map(p => this.cryptService.decryptObject(p)));
-    this.userService.getUser().then(user => {
+    this.userService.getUserObservable().subscribe(user => {
       if (!user?.email) return;
       this.professionalRef = doc(this.firestore, `professionals/${user.email}`);
       this.email = user.email;
@@ -30,8 +31,8 @@ export class PatientService extends AccessService {
     return this.ready;
   }
 
-  async getPatients() {
-    return (await getDoc(this.professionalRef)).data() as object;
+  getProfessionalRef() {
+    return this.professionalRef;
   }
 
   exists(email: string) {
@@ -50,5 +51,14 @@ export class PatientService extends AccessService {
 
   deleteAccess(userId: string) {
     return this._deleteAccess(this.email, userId);
+  }
+
+  getPatientsFromProfessional(professional:any) {
+    const data = professional.data();
+    const patients: any[] = [];
+    for (let key of Object.keys(data).filter(k => !['updatedAt', 'lastLogin'].includes(k))) {
+      patients.push(data[key]);
+    }
+    return patients;
   }
 }

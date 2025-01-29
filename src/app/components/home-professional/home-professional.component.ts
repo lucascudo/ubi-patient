@@ -14,6 +14,7 @@ import { Access } from '../../interfaces/access';
 import { MatTableModule } from '@angular/material/table';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { onSnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home-professional',
@@ -53,16 +54,12 @@ export class HomeProfessionalComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.userService.getUser().then(user => {
+    this.userService.getUserFirstValue().then(user => {
       if (!user) return;
-      const userId = user.uid;
       const interval = setInterval(() => {
         if (!this.patientService.isReady()) return;
-        this.patientService.getPatients().then((patients: any) => {
-          const data: any[] = [];
-          for (let key of Object.keys(patients).filter(k => !['updatedAt', 'lastLogin'].includes(k))) {
-            data.push(patients[key]);
-          }
+        onSnapshot(this.patientService.getProfessionalRef(), (professional: any) => {
+          const data = this.patientService.getPatientsFromProfessional(professional);
           const decryptedData: Access[] = data.map(access => this.cryptService.decryptObject(access));
           this.defaultDataSource = decryptedData.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt)).reverse();
           this.dataSource = [ ...this.defaultDataSource ];

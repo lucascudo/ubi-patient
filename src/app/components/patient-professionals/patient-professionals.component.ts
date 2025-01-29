@@ -53,16 +53,16 @@ export class PatientProfessionalsComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.userService.getUser().then(user => {
+    this.userService.getUserFirstValue().then(user => {
       if (!user) return;
       const userId = user.uid;
       const interval = setInterval(() => {
         if (!this.professionalService.isReady()) return;
         this.professionalService.getProfessionals().subscribe((professionals: any[]) => {
-          const data = professionals
+          const patients = professionals
             .filter(p => Object.keys(p).includes(userId))
             .map((access) => ({ ...access[userId], professional: access.id }));
-          const decryptedData: Access[] = data.map(access => this.cryptService.decryptObject(access, ['professional']));
+          const decryptedData: Access[] = patients.map(access => this.cryptService.decryptObject(access, ['professional']));
           this.defaultDataSource = decryptedData.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt)).reverse();
           this.dataSource = [ ...this.defaultDataSource ];
         });
