@@ -36,7 +36,7 @@ export class PatientService extends AccessService {
   }
 
   exists(email: string) {
-    return this.patients.includes(((p: any) => p.email === email));
+    return this.patients.map(p => p.email).includes(email);
   }
 
   createAccess(email: string) {

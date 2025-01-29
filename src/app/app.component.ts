@@ -38,8 +38,6 @@ import { onSnapshot } from '@angular/fire/firestore';
 })
 export class AppComponent implements OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
-
-  private readonly auth = inject(Auth);
   private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
   private readonly patientService = inject(PatientService);
@@ -47,7 +45,7 @@ export class AppComponent implements OnDestroy {
   private readonly router = inject(Router);
   private subscriptions: Subscription[] = [];
   private unsubscriptions: Unsubscribe[] = [];
-  protected readonly user$ = user(this.auth);
+  protected readonly user$ = this.userService.getUserObservable();
   protected links: Link[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
