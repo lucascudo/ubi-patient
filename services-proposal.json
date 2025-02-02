@@ -1,0 +1,60 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "name": "Alergia",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 2,
+      "name": "Cirurgia",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 3,
+      "name": "Cosmético",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 4,
+      "name": "Exame",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 6,
+      "name": "Hervanária",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 7,
+      "name": "Intolerância",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 8,
+      "name": "Medicação",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    {
+      "id": 9,
+      "name": "Sintoma",
+      "authorId": "",
+      "createdAt": "",
+      "updatedAt": ""
+    }
+  ]
+}

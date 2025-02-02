@@ -6,12 +6,12 @@
       <mat-label>Tipo</mat-label>
       <mat-select formControlName="type">
         @for (type of entityTypes; track type) {
-          <mat-option [value]="type">
-            {{ type }}
+          <mat-option [value]="type.name">
+            {{ type.name }}
           </mat-option>
         }
       </mat-select>
-      
+
       @if (entityForm.get('type')?.hasError('required')) {
         <mat-error>Tipo é obrigatório</mat-error>
       }
@@ -21,7 +21,7 @@
       <mat-label>Nome</mat-label>
       <input matInput formControlName="name" maxlength="50"/>
       <mat-hint align="end">{{entityForm.value.name?.length}} / 50</mat-hint>
-      
+
       @if (entityForm.get('name')?.hasError('required')) {
         <mat-error>Nome é obrigatório</mat-error>
       }
@@ -30,7 +30,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Data</mat-label>
       <input matInput formControlName="timestamp" type="datetime-local" [max]="today.toISOString().slice(0, 19)"/>
-      
+
       @if (entityForm.get('timestamp')?.hasError('required')) {
         <mat-error>Data é obrigatória</mat-error>
       }
@@ -55,7 +55,7 @@
 
   @if (defaultDataSource.length) {
 
-    <mat-form-field class="search-input" appearance="outline">  
+    <mat-form-field class="search-input" appearance="outline">
       <mat-label>Filtrar</mat-label>
       <input matInput #filterInput (keyup)="applyFilter($event)">
     </mat-form-field>

@@ -13,6 +13,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CryptService } from '../../services/crypt.service';
 import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
+import { ServicesAttendenceService } from '../../services/services-attendence.service';
+import { ServicesAttendece } from '../../interfaces/services-attendence';
 
 @Component({
   selector: 'app-home-patient',
@@ -36,21 +38,12 @@ export class HomePatientComponent implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly entityService = inject(EntityService);
   private readonly cryptService = inject(CryptService);
+  private readonly servicesAttendenceService = inject(ServicesAttendenceService);
   protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
   protected today = new Date();
-  protected readonly entityTypes = [
-    'Alergia',
-    'Cirurgia',
-    'Cosmético',
-    'Exame',
-    'Hervanária',
-    'Intolerância',
-    'Medicação',
-    'Procedimento',
-    'Sintoma',
-  ];
+  protected entityTypes: ServicesAttendece[] = [];
   protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     description: new FormControl('', Validators.maxLength(500)),
@@ -64,14 +57,16 @@ export class HomePatientComponent implements OnInit {
         const isFuture = new Date(control.value) > new Date(this.today);
         return isFuture ? { future: {value: control.value} } : null;
       }
-    ]), 
+    ]),
     image: new FormControl(),
   });
+
 
   ngOnInit() {
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
       this.entityService.getEntities().subscribe((data: any[]) => {
+        this.entityTypes = this.servicesAttendenceService.getServices();
         const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
         this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
         this.dataSource = [ ...this.defaultDataSource ];
@@ -123,7 +118,7 @@ export class HomePatientComponent implements OnInit {
       this.entityForm.patchValue({ image });
     }
   }
-  
+
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
@@ -137,7 +132,7 @@ export class HomePatientComponent implements OnInit {
       if (result) this.entityService.deleteEntity(entity);
     });
   }
-  
+
   openDetailsDialog(index: number): void {
     this.dialog.open(EntityViewDialogComponent, {
       data: this.dataSource[index]

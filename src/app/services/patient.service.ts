@@ -14,7 +14,7 @@ export class PatientService extends AccessService {
   private type = 'professional';
   private email: string = '';
   private ready = false;
-  
+
 
   constructor() {
     super();
@@ -36,7 +36,7 @@ export class PatientService extends AccessService {
   }
 
   exists(email: string) {
-    return this.patients.map(p => p.email).includes(email);
+    return this.patients.some(p => p.email === email);
   }
 
   createAccess(email: string) {
@@ -44,7 +44,7 @@ export class PatientService extends AccessService {
     if (!userId) return;
     return this._createAccess(this.email, email, userId, this.type);
   }
-  
+
   updatedAcceptance(userId: string, accepted: boolean) {
     return this._updatedAcceptance(this.email, userId, accepted, this.type);
   }
