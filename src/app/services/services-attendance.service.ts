@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ServicesAttendenceService extends AccessService {
+export class ServicesAttendanceService extends AccessService {
 
   private userService = inject(UserService);
   private servicesCollection = collectionData(collection(this.firestore, 'services'));

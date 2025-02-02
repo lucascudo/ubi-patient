@@ -13,8 +13,8 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CryptService } from '../../services/crypt.service';
 import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
-import { ServicesAttendenceService } from '../../services/services-attendence.service';
-import { ServicesAttendece } from '../../interfaces/services-attendence';
+import { ServicesAttendanceService } from '../../services/services-attendance.service';
+import { ServicesAttendance } from '../../interfaces/services-attandence';
 
 @Component({
   selector: 'app-home-patient',
@@ -38,12 +38,12 @@ export class HomePatientComponent implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly entityService = inject(EntityService);
   private readonly cryptService = inject(CryptService);
-  private readonly servicesAttendenceService = inject(ServicesAttendenceService);
+  private readonly servicesAttendanceService = inject(ServicesAttendanceService);
   protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
   protected today = new Date();
-  protected entityTypes: ServicesAttendece[] = [];
+  protected entityTypes: ServicesAttendance[] = [];
   protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     description: new FormControl('', Validators.maxLength(500)),
@@ -66,7 +66,7 @@ export class HomePatientComponent implements OnInit {
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
       this.entityService.getEntities().subscribe((data: any[]) => {
-        this.entityTypes = this.servicesAttendenceService.getServices();
+        this.entityTypes = this.servicesAttendanceService.getServices();
         const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
         this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
         this.dataSource = [ ...this.defaultDataSource ];

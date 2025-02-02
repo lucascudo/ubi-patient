@@ -1,4 +1,4 @@
-export interface ServicesAttendece {
+export interface ServicesAttendance {
   id?: number;
   name: string;
   authorId?: string;
