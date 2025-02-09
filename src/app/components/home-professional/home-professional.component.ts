@@ -15,6 +15,9 @@ import { MatTableModule } from '@angular/material/table';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { onSnapshot } from '@angular/fire/firestore';
+import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
+import { map, take, tap } from 'rxjs';
+import { DialogPatientDetailsComponent } from '../dialog-patient-details/dialog-patient-details.component';
 
 @Component({
   selector: 'app-home-professional',
@@ -126,6 +129,14 @@ export class HomeProfessionalComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.patientService.deleteAccess(access.id);
+    });
+  }
+
+  openDetailsDialog(patient: any): void {
+    this.patientService.getPatientDetails(patient?.id).subscribe((result) => {
+        this.dialog.open(DialogPatientDetailsComponent, {
+          data: result,
+        });
     });
   }
 }

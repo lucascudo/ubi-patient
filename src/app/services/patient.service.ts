@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { collection, collectionData, doc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
+import { map, Observable, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class PatientService extends AccessService {
   private type = 'professional';
   private email: string = '';
   private ready = false;
-  
+
 
   constructor() {
     super();
@@ -44,7 +45,7 @@ export class PatientService extends AccessService {
     if (!userId) return;
     return this._createAccess(this.email, email, userId, this.type);
   }
-  
+
   updatedAcceptance(userId: string, accepted: boolean) {
     return this._updatedAcceptance(this.email, userId, accepted, this.type);
   }
@@ -61,4 +62,12 @@ export class PatientService extends AccessService {
     }
     return patients;
   }
+
+  getPatientDetails(id: string): Observable<any> {
+    return collectionData(collection(this.firestore, `entities-${id}`)).pipe(
+      take(1),
+      map((response) => response.map((p) => this.cryptService.decryptObject(p))
+    ));
+  }
+
 }

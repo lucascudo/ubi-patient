@@ -6,11 +6,11 @@
       <mat-label>E-mail</mat-label>
       <input matInput type="email" formControlName="email" maxlength="50"/>
       <mat-hint align="end">{{invitationForm.value.email?.length}} / 50</mat-hint>
-      
+
       @if (invitationForm.get('email')?.hasError('required')) {
         <mat-error>E-mail é obrigatório</mat-error>
       }
-      
+
       @if (invitationForm.get('email')?.hasError('email')) {
         <mat-error>E-mail inválido</mat-error>
       }
@@ -28,12 +28,12 @@
 
   @if (defaultDataSource.length) {
 
-    <mat-form-field class="search-input" appearance="outline">  
+    <mat-form-field class="search-input" appearance="outline">
       <mat-label>Filtrar</mat-label>
       <input matInput #filterInput (keyup)="applyFilter($event)">
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 space-bottom">
       <ng-container matColumnDef="patient">
         <th mat-header-cell *matHeaderCellDef> E-mail </th>
         <td mat-cell *matCellDef="let element"> {{ element.email }} </td>
@@ -67,6 +67,9 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Ações </th>
         <td mat-cell *matCellDef="let element; let i = index">
+          <button mat-icon-button color="primary" title="Detalhes" (click)="openDetailsDialog(element)">
+            <mat-icon>pageview</mat-icon>
+          </button>
           <button mat-icon-button color="warn" title="Remover" (click)="openDeletionDialog(i)">
             <mat-icon>delete</mat-icon>
           </button>
