@@ -1,8 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Firestore, collectionData, collection, addDoc, deleteDoc, doc, DocumentReference } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, collectionData, collection, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
-import { Entity } from '../interfaces/entity';
 import { CryptService } from './crypt.service';
 
 @Injectable({

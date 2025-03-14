@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { collection, collectionData } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
-import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

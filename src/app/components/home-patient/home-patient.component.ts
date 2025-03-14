@@ -13,6 +13,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CryptService } from '../../services/crypt.service';
 import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-home-patient',
@@ -36,21 +37,13 @@ export class HomePatientComponent implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly entityService = inject(EntityService);
   private readonly cryptService = inject(CryptService);
+  private readonly configService = inject(ConfigService);
   protected defaultDataSource: any[] = [];
   protected dataSource: any[] = [];
   protected displayedColumns: string[] = [];
   protected today = new Date();
-  protected readonly entityTypes = [
-    'Alergia',
-    'Cirurgia',
-    'Cosmético',
-    'Exame',
-    'Hervanária',
-    'Intolerância',
-    'Medicação',
-    'Procedimento',
-    'Sintoma',
-  ];
+  protected entityTypes: any = {};
+  protected readonly _object = Object;
   protected readonly entityForm = new FormGroup({
     type: new FormControl('', Validators.required),
     description: new FormControl('', Validators.maxLength(500)),
@@ -69,6 +62,7 @@ export class HomePatientComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.configService.getEntityTypes().then(et => { this.entityTypes = et});
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
       this.entityService.getEntities().subscribe((data: any[]) => {
@@ -127,7 +121,7 @@ export class HomePatientComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    const article = ['Cosmético', 'Exame', 'Procedimento', 'Sintoma'].includes(entity.type) ? 'o' : 'a';
+    const article = 'a';//this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
     const content = `Remover ${article} ${entity.type}: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Confirmação de Remoção', content },
