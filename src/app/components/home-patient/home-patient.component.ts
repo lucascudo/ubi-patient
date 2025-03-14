@@ -121,7 +121,7 @@ export class HomePatientComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    const article = 'a';//this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
+    const article = this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
     const content = `Remover ${article} ${entity.type}: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: 'Confirmação de Remoção', content },
