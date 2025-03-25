@@ -31,6 +31,10 @@ export class EntityService {
     return collectionData(this.entityCollection, { idField: "id" });
   }
 
+  getEntitiesFromPatient(id: string) {
+    return collectionData(collection(this.firestore, `entities-${id}`), { idField: "id" });
+  }
+
   addEntity(entity: any) {
     const createdAt = new Date();
     const encryptedEntity: any = this.cryptService.encryptObject(entity);

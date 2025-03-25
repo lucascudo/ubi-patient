@@ -5,7 +5,7 @@ import { Auth } from '@angular/fire/auth';
 import { firstValueFrom, map } from 'rxjs';
 import { UserService } from '../services/user.service';
 
-export const authGuard: CanActivateFn = async (next: ActivatedRouteSnapshot) => {
+export const authGuard: CanActivateFn = async (next) => {
   const router = inject(Router);
   const auth = inject(Auth);
   const userService = inject(UserService);

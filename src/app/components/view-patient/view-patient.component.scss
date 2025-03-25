@@ -1,0 +1,20 @@
+.container {
+	margin: 8px 8px 0 8px;
+	max-width: 1024px;
+}
+
+.search-input {
+  width: 100%;
+}
+
+.entity-image {
+  max-width: 64px;
+  max-height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.entity-description {
+  max-width: 50ch;
+  white-space: nowrap;
+}

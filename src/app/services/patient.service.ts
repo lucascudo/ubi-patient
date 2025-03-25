@@ -53,7 +53,7 @@ export class PatientService extends AccessService {
     return this._deleteAccess(this.email, userId);
   }
 
-  getPatientsFromProfessional(professional:any) {
+  getPatientsFromProfessional(professional: any) {
     const data = professional.data();
     const patients: any[] = [];
     for (let key of Object.keys(data).filter(k => !['updatedAt', 'lastLogin'].includes(k))) {

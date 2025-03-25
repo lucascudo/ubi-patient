@@ -10,7 +10,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Auth, Unsubscribe, user } from '@angular/fire/auth';
+import { Unsubscribe } from '@angular/fire/auth';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Link } from './interfaces/link';
