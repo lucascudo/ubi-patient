@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -9,12 +9,16 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
-    provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(),
+    provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ]
 };
