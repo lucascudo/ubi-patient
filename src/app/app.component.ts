@@ -16,7 +16,8 @@ import { UserService } from './services/user.service';
 import { Link } from './interfaces/link';
 import { PatientService } from './services/patient.service';
 import { ProfessionalService } from './services/professional.service';
-import { onSnapshot } from '@angular/fire/firestore';
+import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
+import { AccessLog } from './interfaces/access-log';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class AppComponent implements OnDestroy {
     this.subscriptions.push(this.user$.subscribe(async (user) => {
       if (!user?.email) return;
       if (await this.userService.isUserProfessional(user.email)) {
-        this.unsubscriptions.push(onSnapshot(this.patientService.getProfessionalRef(), (professional: any) => {
+        this.unsubscriptions.push(onSnapshot(this.patientService.getProfessionalRef(), (professional: DocumentSnapshot) => {
           const patients = this.patientService.getPatientsFromProfessional(professional);
           const count = patients.filter(access => !access.professionalAcceptedAt).length;
           const badge = count ? count.toString() : '';
@@ -68,15 +69,22 @@ export class AppComponent implements OnDestroy {
         }));
       } else {
         this.subscriptions.push(this.professionalService.getProfessionals().subscribe((professionals: any[]) => {
+          const positiveOrEmpty = (value: number) => value ? value.toString() : '';
           const professionalsWaitingAcceptance = professionals
             .filter(p => Object.keys(p).includes(user.uid))
             .map((professional: any) => professional[user.uid])
             .filter(access => !access.patientAcceptedAt).length;
-          const badge = professionalsWaitingAcceptance ? professionalsWaitingAcceptance.toString() : '';
-          this.links = [
-            {path: "/home-patient", label: "Meus eventos"},
-            {path: "/patient-professionals", label: "Meus profissionais", badge},
-          ];
+          this.unsubscriptions.push(onSnapshot(this.professionalService.getPatientRef(), (patient: DocumentSnapshot) => {
+            const patientData: any = patient.data();
+            if (!patientData) return;
+            const logs = patientData['accesses'] || [];
+            const unreadLogs = logs.filter((l: AccessLog) => !l.viewedAt).length;
+            this.links = [
+              {path: "/home-patient", label: "Meus eventos"},
+              {path: "/patient-professionals", label: "Meus profissionais", badge: positiveOrEmpty(professionalsWaitingAcceptance)},
+              {path: "/patient-logs", label: "Logs de acesso", badge: positiveOrEmpty(unreadLogs)},
+            ];
+          }));
         }));
       }
     }));

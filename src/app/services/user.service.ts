@@ -38,7 +38,7 @@ export class UserService {
     return setDoc(doc(this.firestore, `patients/${user.uid}`), {
       email: this.cryptService.encryptString(user.email),
       lastLogin: now
-    });
+    }, { merge: true });
   }
 
 }

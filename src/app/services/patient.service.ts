@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData, doc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
 
@@ -51,6 +51,18 @@ export class PatientService extends AccessService {
 
   deleteAccess(userId: string) {
     return this._deleteAccess(this.email, userId);
+  }
+
+  async logAccess(patientId: string, professionalEmail: string) {
+    const timestamp = new Date().toISOString().slice(0, 16);
+    const patientRef = doc(this.firestore, `patients/${patientId}`);
+    const patientData = (await getDoc(patientRef))?.data();
+    if (!patientData) return;
+    let accesses = patientData['accesses'] || [];
+    accesses.push(this.cryptService.encryptObject({ professionalEmail, timestamp }));
+    return updateDoc(patientRef, {
+      accesses
+    });
   }
 
   getPatientsFromProfessional(professional: any) {

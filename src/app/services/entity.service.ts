@@ -36,12 +36,8 @@ export class EntityService {
   }
 
   addEntity(entity: any) {
-    const createdAt = new Date();
-    const encryptedEntity: any = this.cryptService.encryptObject(entity);
-    return addDoc(this.entityCollection, {
-      ...encryptedEntity,
-      createdAt,
-    });
+    const encryptedEntity = this.cryptService.encryptObject(entity);
+    return addDoc(this.entityCollection, encryptedEntity);
   }
 
   deleteEntity(entity: any) {

@@ -12,7 +12,7 @@ import { Entity } from '../../interfaces/entity';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { PatientService } from '../../services/patient.service';
-import { onSnapshot } from '@angular/fire/firestore';
+import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
 import { Access } from '../../interfaces/access';
 
 @Component({
@@ -60,7 +60,7 @@ export class ViewPatientComponent implements OnInit {
       this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
       this.dataSource = [ ...this.defaultDataSource ];
     });
-    onSnapshot(this.patientService.getProfessionalRef(), (professional: any) => {
+    onSnapshot(this.patientService.getProfessionalRef(), (professional: DocumentSnapshot) => {
       const data = this.patientService.getPatientsFromProfessional(professional);
       const decryptedData: Access[] = data.map(access => this.cryptService.decryptObject(access));
       const access = decryptedData.find(p => p.id === patientId && p.patientAcceptedAt && p.professionalAcceptedAt);
@@ -69,6 +69,7 @@ export class ViewPatientComponent implements OnInit {
         return;
       }
       this.patientEmail = access.email;
+      this.patientService.logAccess(patientId, professional.id);
     });
   }
 

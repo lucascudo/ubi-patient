@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, collectionData } from '@angular/fire/firestore';
+import { collection, collectionData, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { AccessService } from './access.service';
+import { AccessLog } from '../interfaces/access-log';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class ProfessionalService extends AccessService {
   private userId: string = '';
   private email: string = '';
   private ready = false;
+  private patientRef: any;
 
   constructor() {
     super();
@@ -22,11 +24,16 @@ export class ProfessionalService extends AccessService {
       this.userId = user.uid;
       this.email = user.email;
       this.ready = true;
+      this.patientRef = doc(this.firestore, `patients/${user.uid}`)
     });
   }
 
   isReady() {
     return this.ready;
+  }
+
+  getPatientRef() {
+    return this.patientRef;
   }
 
   getProfessionals() {
@@ -43,5 +50,20 @@ export class ProfessionalService extends AccessService {
 
   deleteAccess(email: string) {
     return this._deleteAccess(email, this.userId);
+  }
+
+  async updateUnreadLogs() {
+    const patientData: any = (await getDoc(this.patientRef))?.data();
+    if (!patientData) return [];
+    const logs = patientData['accesses'] || [];
+    const accesses = logs.map((log: AccessLog) => {
+      if (!log.viewedAt) {
+        log.viewedAt = this.cryptService.encryptString((new Date()).toISOString().slice(0, 16));
+      }
+      return log;
+    });
+    return updateDoc(this.patientRef, {
+      accesses
+    });
   }
 }
