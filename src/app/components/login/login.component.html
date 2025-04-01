@@ -12,14 +12,14 @@
       <mat-error>Combinação de email/senha inválida</mat-error>
     }
     <button mat-fab extended color="primary" type="submit" [disabled]="!logInForm.valid">Entrar</button>
-    <div style="text-align: center;">
+    <div class="register-link">
       <a v-allign="center" routerLink="/register">Novo Cadastro</a>
     </div>
   </form>
 
-  ou <button mat-fab extended color="neutral" (click)="logInWithGoogle()">
+  ou <button mat-fab extended (click)="logInWithGoogle()">
     <img src="img/google-logo.svg" class="google-logo" />
-    Entrar com uma conta Google
+    Entrar com uma conta do Google
   </button>
   <br>
 </section>
