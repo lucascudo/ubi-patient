@@ -1,6 +1,25 @@
 <section class="container">
-  <button mat-fab extended color="neutral" (click)="loginWithGoogle()">
+  <form [formGroup]="logInForm" #formDirective="ngForm" (ngSubmit)="logInWithEmailAndPassword(emailInput.value, passwordInput.value)" class="login-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput #emailInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input type="password" matInput #passwordInput formControlName="password">
+    </mat-form-field>
+    @if (logInError) {
+      <mat-error>Combinação de email/senha inválida</mat-error>
+    }
+    <button mat-fab extended color="primary" type="submit" [disabled]="!logInForm.valid">Entrar</button>
+    <div style="text-align: center;">
+      <a v-allign="center" routerLink="/register">Novo Cadastro</a>
+    </div>
+  </form>
+
+  ou <button mat-fab extended color="neutral" (click)="logInWithGoogle()">
     <img src="img/google-logo.svg" class="google-logo" />
-    Log in with Google
+    Entrar com uma conta Google
   </button>
+  <br>
 </section>

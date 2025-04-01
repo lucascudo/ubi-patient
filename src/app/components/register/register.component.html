@@ -1,0 +1,35 @@
+<section class="container">
+  <form [formGroup]="registrationForm" #formDirective="ngForm" (ngSubmit)="registerWithEmailAndPassword(emailInput.value, passwordInput.value)" class="login-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="email" matInput #emailInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input type="password" matInput #passwordInput formControlName="password">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Confirmação da Senha</mat-label>
+      <input type="password" matInput formControlName="passwordConfirmation">
+    </mat-form-field>
+    @if (registrationForm.hasError('passwordsDontMatch')) {
+      <mat-error>Os campos "Senha" e "Confirmação da Senha" devem ser iguais</mat-error>
+      <br>
+    }
+    @if (registrationError) {
+      <mat-error>Não foi possível realizar o cadastro com esta combinação de email/senha</mat-error>
+      <br>
+    }
+    <button mat-fab extended color="primary" type="submit" [disabled]="!registrationForm.valid">Cadastrar-se</button>
+    <div style="text-align: center;">
+      <a v-allign="center" routerLink="/login">Entrar com uma conta já existente</a>
+    </div>
+  </form>
+
+  ou <button mat-fab extended color="neutral" (click)="logInWithGoogle()">
+    <img src="img/google-logo.svg" class="google-logo" />
+    Entrar com uma conta Google
+  </button>
+  <br>
+</section>
+  

@@ -31,14 +31,17 @@ export class UserService {
 
   logAuth(user: User, isProfessional: boolean) {
     const now = new Date();
+    let userDocument;
+    let value;
     if (!user?.email) return;
     if (isProfessional) {
-      return setDoc(doc(this.firestore, `professionals/${user.email}`), { lastLogin: now }, { merge: true });
+      userDocument = doc(this.firestore, `professionals/${user.email}`);
+      value = { lastLogin: now };
+    } else {
+      userDocument = doc(this.firestore, `patients/${user.uid}`);
+      value = { email: this.cryptService.encryptString(user.email), lastLogin: now };
     }
-    return setDoc(doc(this.firestore, `patients/${user.uid}`), {
-      email: this.cryptService.encryptString(user.email),
-      lastLogin: now
-    }, { merge: true });
+    return setDoc(userDocument, value, { merge: true });
   }
 
 }
