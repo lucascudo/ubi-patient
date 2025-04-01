@@ -61,7 +61,7 @@ export class HomeProfessionalComponent implements OnInit {
       onSnapshot(this.patientService.getProfessionalRef(), (professional: DocumentSnapshot) => {
         const data = this.patientService.getPatientsFromProfessional(professional);
         const decryptedData: Access[] = data.map(access => this.cryptService.decryptObject(access));
-        this.defaultDataSource = decryptedData.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt)).reverse();
+        this.defaultDataSource = decryptedData.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).reverse();
         this.dataSource = [ ...this.defaultDataSource ];
       });
       clearInterval(interval);
@@ -69,7 +69,7 @@ export class HomeProfessionalComponent implements OnInit {
 
     this.breakpointObserver.observe(Breakpoints.Handset).subscribe(result => {
       const handsetColumns = ['patient', 'professionalAccepted', 'actions'];
-      const allColumns = ['patient', 'patientAccepted', 'professionalAccepted', 'updatedAt', 'actions'];
+      const allColumns = ['patient', 'patientAccepted', 'professionalAccepted', 'createdAt', 'actions'];
       this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
     });
   }

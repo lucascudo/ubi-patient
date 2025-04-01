@@ -63,7 +63,7 @@ export class PatientProfessionalsComponent implements OnInit {
             .filter(p => Object.keys(p).includes(userId))
             .map((access) => ({ ...access[userId], professional: access.id }));
           const decryptedData: Access[] = patients.map(access => this.cryptService.decryptObject(access, ['professional']));
-          this.defaultDataSource = decryptedData.sort((a, b) => a.updatedAt.localeCompare(b.updatedAt)).reverse();
+          this.defaultDataSource = decryptedData.sort((a, b) => a.createdAt.localeCompare(b.createdAt)).reverse();
           this.dataSource = [ ...this.defaultDataSource ];
         });
         clearInterval(interval);
@@ -72,7 +72,7 @@ export class PatientProfessionalsComponent implements OnInit {
 
     this.breakpointObserver.observe(Breakpoints.Handset).subscribe(result => {
       const handsetColumns = ['professional', 'patientAccepted', 'actions'];
-      const allColumns = ['professional', 'professionalAccepted', 'patientAccepted', 'updatedAt', 'actions'];
+      const allColumns = ['professional', 'professionalAccepted', 'patientAccepted', 'createdAt', 'actions'];
       this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
     });
   }
