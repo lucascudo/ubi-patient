@@ -31,7 +31,7 @@ export class AccessService {
     return setDoc(doc(this.firestore, `professionals/${professionalEmail}`), {
       [access.id]: access,
       updatedAt: now,
-    });
+    }, { merge: true });
   }
 
   protected _updatedAcceptance(email: string, userId: string, accepted: boolean, changer: string) {
