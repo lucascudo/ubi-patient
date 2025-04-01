@@ -7,26 +7,26 @@ import { firstValueFrom } from 'rxjs';
 })
 export class ConfigService {
   private firestore = inject(Firestore);
-  private config;
+  private configCollection;
 
   constructor() {
-    const configCollection = collection(this.firestore, 'config');
-    this.config = firstValueFrom(collectionData(configCollection, { idField: 'id' }));
+    this.configCollection = collection(this.firestore, 'config');
   }
 
   private async getConfigById(id: string) {
-    const configs = (await this.config).filter(c => c.id === id).map(c => {
+    const allConfigs = firstValueFrom(collectionData(this.configCollection, { idField: 'id' }));
+    const configs = (await allConfigs).filter(c => c.id === id).map(c => {
       delete c.id;
       return c;
     });
     if (!configs.length) {
       throw new Error(`Config ${id} not found`);
     }
-    return configs.pop();
+    return configs[0];
   }
 
-  async getEntityTypes() {
-    return await this.getConfigById('entityTypes');
+  getEntityTypes() {
+    return this.getConfigById('entityTypes');
   }
 
 }

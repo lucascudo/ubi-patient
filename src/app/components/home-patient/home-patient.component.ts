@@ -62,7 +62,7 @@ export class HomePatientComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.configService.getEntityTypes().then(et => { this.entityTypes = et});
+    this.configService.getEntityTypes().then(et => this.entityTypes = et);
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
       this.entityService.getEntities().subscribe((data: any[]) => {
