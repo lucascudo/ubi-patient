@@ -7,13 +7,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EntityService } from '../../services/entity.service';
-import { Entity } from '../../interfaces/entity';
-import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CryptService } from '../../services/crypt.service';
-import { EntityViewDialogComponent } from '../entity-view-dialog/entity-view-dialog.component';
 import { ConfigService } from '../../services/config.service';
+import { BasePatient } from '../base-patient/base-patient';
 
 @Component({
   selector: 'app-home-patient',
@@ -31,16 +28,10 @@ import { ConfigService } from '../../services/config.service';
     ReactiveFormsModule,
   ]
 })
-export class HomePatientComponent implements OnInit {
-  private readonly dialog = inject(MatDialog);
-  private readonly baseColumns = ['type', 'name', 'timestamp']
+export class HomePatientComponent extends BasePatient implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly entityService = inject(EntityService);
-  private readonly cryptService = inject(CryptService);
   private readonly configService = inject(ConfigService);
-  protected defaultDataSource: any[] = [];
-  protected dataSource: any[] = [];
-  protected displayedColumns: string[] = [];
   protected today = new Date();
   protected entityTypes: any = {};
   protected readonly _object = Object;
@@ -65,18 +56,10 @@ export class HomePatientComponent implements OnInit {
     this.configService.getEntityTypes().then(et => this.entityTypes = et);
     const interval = setInterval(() => {
       if (!this.entityService.isReady()) return;
-      this.entityService.getEntities().subscribe((data: any[]) => {
-        const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
-        this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
-        this.dataSource = [ ...this.defaultDataSource ];
-      });
+      this.entityService.getEntities().subscribe(this.handleEntities);
       clearInterval(interval);
     }, 200);
-    this.breakpointObserver.observe(Breakpoints.Handset).subscribe(result => {
-      const handsetColumns = this.baseColumns.concat(['actions']);
-      const allColumns = this.baseColumns.concat(['description', 'image', 'actions']);
-      this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
-    });
+    this.breakpointObserver.observe(Breakpoints.Handset).subscribe(this.handleDisplayedColumns);
     this.today.setHours(23, 59, 59);
   }
 
@@ -130,26 +113,5 @@ export class HomePatientComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) this.entityService.deleteEntity(entity);
     });
-  }
-  
-  openDetailsDialog(index: number): void {
-    this.dialog.open(EntityViewDialogComponent, {
-      data: this.dataSource[index]
-    });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    if (filterValue) {
-      this.dataSource = this.defaultDataSource.filter(entity => {
-        const searchableColumns = this.baseColumns.concat(['description']);
-        for (let key of searchableColumns) {
-          if (entity[key].trim().toLowerCase().includes(filterValue)) return true;
-        }
-        return false;
-      });
-    } else {
-      this.dataSource = [ ...this.defaultDataSource ];
-    }
   }
 }
