@@ -1,0 +1,5 @@
+export enum ACTION_TYPES {
+  CREATED = 'CREATED',
+  DELETED = 'DELETED',
+  UPDATED = 'UPDATED'
+}

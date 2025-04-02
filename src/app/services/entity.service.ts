@@ -2,23 +2,26 @@ import { inject, Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, addDoc, deleteDoc, doc } from '@angular/fire/firestore';
 import { UserService } from './user.service';
 import { CryptService } from './crypt.service';
+import { LoggerService } from './logger.service';
+import { ACTION_TYPES } from '../enums/action-types.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EntityService {
+  private loggerService = inject(LoggerService);
   private firestore = inject(Firestore);
   private userService = inject(UserService);
   private cryptService = inject(CryptService);
   private entityCollection: any;
-  private userId: string = '';
+  private entitiesCollectionId: string = '';
   private ready = false;
 
   constructor() {
     this.userService.getUserFirstValue().then(user => {
       if (!user) return;
-      this.userId = user.uid;
-      this.entityCollection = collection(this.firestore, `entities-${this.userId}`);
+      this.entitiesCollectionId = `entities-${user.uid}`;
+      this.entityCollection = collection(this.firestore, this.entitiesCollectionId);
       this.ready = true;
     });
   }
@@ -32,15 +35,18 @@ export class EntityService {
   }
 
   getEntitiesFromPatient(id: string) {
-    return collectionData(collection(this.firestore, `entities-${id}`), { idField: "id" });
+    return collectionData(collection(this.firestore, this.entitiesCollectionId), { idField: "id" });
   }
 
   addEntity(entity: any) {
     const encryptedEntity = this.cryptService.encryptObject(entity);
-    return addDoc(this.entityCollection, encryptedEntity);
+    const promise = addDoc(this.entityCollection, encryptedEntity);
+    promise.then((docRef) => this.loggerService.log(ACTION_TYPES.CREATED, `entity ${this.entitiesCollectionId}/${docRef.id}`));
+    return promise;
   }
 
   deleteEntity(entity: any) {
-    deleteDoc(doc(this.firestore, `entities-${this.userId}/${entity.id}`));
+    const target = `${this.entitiesCollectionId}/${entity.id}`
+    deleteDoc(doc(this.firestore, target)).then(() => this.loggerService.log(ACTION_TYPES.CREATED, `entity ${target}`));
   }
 }
