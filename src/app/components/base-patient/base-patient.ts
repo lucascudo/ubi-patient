@@ -16,12 +16,12 @@ export abstract class BasePatient {
     const decryptedData: Entity[] = data.map(entity => this.cryptService.decryptObject(entity));
     this.defaultDataSource = decryptedData.sort((a, b) => a.timestamp.localeCompare(b.timestamp)).reverse();
     this.dataSource = [ ...this.defaultDataSource ];
-  }
+  };
   protected handleDisplayedColumns = (result: BreakpointState) => {
     const handsetColumns = this.baseColumns.concat(['actions']);
     const allColumns = this.baseColumns.concat(['description', 'image', 'actions']);
     this.displayedColumns = (result.matches) ? handsetColumns : allColumns;
-  }
+  };
   
   openDetailsDialog(index: number): void {
     this.dialog.open(EntityViewDialogComponent, {

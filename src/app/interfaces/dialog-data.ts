@@ -1,4 +1,4 @@
 export interface DialogData {
-    content: string,
-    title?: string
+  content: string,
+  title?: string
 }
