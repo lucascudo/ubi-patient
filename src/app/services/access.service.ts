@@ -4,7 +4,6 @@ import { CryptService } from './crypt.service';
 import { Access } from '../interfaces/access';
 import { LoggerService } from './logger.service';
 import { ACTION_TYPES } from '../enums/action-types.enum';
-import { user } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'

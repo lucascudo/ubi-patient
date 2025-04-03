@@ -4,10 +4,16 @@
   "newProjectRoot": "projects",
   "projects": {
     "ubi-patient": {
-      "i18n": {
-        "sourceLocale": "pt-PT"
-      },
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "pt": {
+            "translation": "src/locale/messages.pt.xlf",
+            "baseHref": "/pt/"
+          }
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -20,6 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "localize": true,
             "outputPath": "dist/ubi-patient",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -42,6 +49,9 @@
             "scripts": []
           },
           "configurations": {
+            "pt": {
+              "localize": ["pt"]
+            },
             "production": {
               "budgets": [
                 {
@@ -69,6 +79,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "pt": {
+              "buildTarget": "ubi-patient:build:development,production,pt"
+            },
             "production": {
               "buildTarget": "ubi-patient:build:production"
             },
@@ -79,7 +92,10 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "outputPath": "src/locale"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",

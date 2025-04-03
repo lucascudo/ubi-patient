@@ -1,3 +1,15 @@
+.toolbar {
+  max-width: 1040px;
+}
+
+.login-toolbar {
+  max-width: 332px;
+}
+
+.handset-toolbar {
+  max-width: 100%;
+}
+
 .sidenav-container {
   height: 100%;
 }
@@ -15,6 +27,15 @@
   top: 0;
   z-index: 1;
 }
+
+.flags-container {
+  right: 16px;
+  position: absolute;
+  a {
+    text-decoration: none;
+  }
+}
+
 
 .white-colored {
   color: white;

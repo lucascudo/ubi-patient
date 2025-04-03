@@ -50,7 +50,7 @@ export class HomePatientComponent extends BasePatient implements OnInit {
         const isFuture = new Date(control.value) > new Date(this.today);
         return isFuture ? { future: {value: control.value} } : null;
       }
-    ]), 
+    ]),
     image: new FormControl(),
   });
 
@@ -102,14 +102,14 @@ export class HomePatientComponent extends BasePatient implements OnInit {
       this.entityForm.patchValue({ image });
     }
   }
-  
+
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
     const article = this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
-    const content = `Remover ${article} ${entity.type}: ${entity.name}?`;
+    const content = $localize`Remove ${article} ${entity.type}\: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: 'Confirmação de Remoção', content },
+      data: { title: $localize`Removal Confirmation`, content },
     });
 
     dialogRef.afterClosed().subscribe(result => {

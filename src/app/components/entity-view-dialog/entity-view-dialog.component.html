@@ -6,7 +6,7 @@
       <mat-card-subtitle>{{ data.timestamp | date:'short' }}</mat-card-subtitle>
     </mat-card-header>
     @if (data.image) {
-      <img mat-card-image [src]="data.image" alt="Imagem"/>
+      <img mat-card-image [src]="data.image" i18n-alt alt="Image"/>
     }
     <mat-card-content>
       <p>{{ data.description }}</p>
@@ -14,5 +14,5 @@
   </mat-card>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close cdkFocusInitial>Fechar</button>
+  <button mat-button mat-dialog-close cdkFocusInitial i18n>Close</button>
 </mat-dialog-actions>

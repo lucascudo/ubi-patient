@@ -11,34 +11,48 @@
               <span matBadge="{{ link.badge }}" matBadgeOverlap="false">{{ link.label }}</span>
             </a>
           }
-          <a mat-list-item href="#" (click)="logout()">Sair</a>
+          <a mat-list-item href="#" (click)="logout()" i18n>Logout</a>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
+      <mat-toolbar color="primary" [class]="(isHandset$ | async) ? 'handset-toolbar' : 'toolbar'">
         @if (isHandset$ | async) {
           <button
             type="button"
             aria-label="Toggle sidenav"
             mat-icon-button
             (click)="drawer.toggle()">
-            <mat-icon class="white-colored" aria-label="Menu de navegação" >menu</mat-icon>
+            <mat-icon class="white-colored" i18n-aria-label aria-label="Navigation menu" >menu</mat-icon>
           </button>
         }
         <img alt="UBI Logo" src="img/ubi-logo.png"/>
         <span class="white-colored">ubi-patient</span>
         &nbsp;
         <mat-icon class="white-colored" >local_hospital</mat-icon>
+        <span class="flags-container">
+          @for (locale of locales; track locale.code) {
+            <a href="/{{ locale.code + getCurrentPath() }}">
+              {{ locale.flag }}
+            </a>
+          }
+        </span>
       </mat-toolbar>
       <router-outlet />
     </mat-sidenav-content>
   </mat-sidenav-container>
 } @else {
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" [class]="(isHandset$ | async) ? 'handset-toolbar' : 'login-toolbar'">
     <img alt="UBI Logo" src="img/ubi-logo.png"/>
     <span class="white-colored">ubi-patient</span>
     &nbsp;
     <mat-icon class="white-colored" >local_hospital</mat-icon>
+    <span class="flags-container">
+      @for (locale of locales; track locale.code) {
+        <a href="/{{ locale.code + getCurrentPath() }}">
+          {{ locale.flag }}
+        </a>
+      }
+    </span>
   </mat-toolbar>
   <router-outlet />
 }

@@ -48,7 +48,7 @@ export class PatientProfessionalsComponent implements OnInit {
       Validators.email,
       Validators.maxLength(50),
       (control: AbstractControl): ValidationErrors | null => {
-        const isRepeated = this.defaultDataSource.map(a => a.professional).includes(control.value);
+        const isRepeated = this.defaultDataSource.map(a => a.email).includes(control.value);
         return isRepeated ? { repeated: {value: control.value} } : null;
       }
     ]),
@@ -86,12 +86,12 @@ export class PatientProfessionalsComponent implements OnInit {
     }
     if (!await this.userService.isUserProfessional(email)) {
       this.dialog.open(AlertDialogComponent, {
-        data: { content: `Não foi encontrado nenhum profissional com o email: ${email}` },
+        data: { content: $localize`No professionals were found with the email\: ${email}` },
       });
       return;
     }
     const confirmationDialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { content: `Conceder acesso aos seus dados a ${email}?` },
+      data: { content: $localize`Grant access to your data to ${email}?` },
     });
 
     confirmationDialogRef.afterClosed().subscribe(result => {
@@ -123,9 +123,9 @@ export class PatientProfessionalsComponent implements OnInit {
 
   openDeletionDialog(index: number): void {
     const access = this.dataSource[index];
-    const content = `Remover o acesso de ${access.professional} definitivamente?`;
+    const content = $localize`Remove access from ${access.professional} permanently?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: 'Confirmação de Remoção', content },
+      data: { title: $localize`Removal Confirmation`, content },
     });
 
     dialogRef.afterClosed().subscribe(result => {

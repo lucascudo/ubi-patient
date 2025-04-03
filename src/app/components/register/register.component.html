@@ -5,31 +5,30 @@
       <input type="email" matInput #emailInput formControlName="email">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Senha</mat-label>
+      <mat-label i18n>Password</mat-label>
       <input type="password" matInput #passwordInput formControlName="password">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Confirmação da Senha</mat-label>
+      <mat-label i18n>Password Confirmation</mat-label>
       <input type="password" matInput formControlName="passwordConfirmation">
     </mat-form-field>
     @if (registrationForm.hasError('passwordsDontMatch')) {
-      <mat-error>Os campos "Senha" e "Confirmação da Senha" devem ser iguais</mat-error>
+      <mat-error i18n>The “Password” and “Password Confirmation” fields must be equals</mat-error>
       <br>
     }
     @if (registrationError) {
-      <mat-error>Não foi possível realizar o cadastro com esta combinação de email/senha</mat-error>
+      <mat-error i18n>It was not possible to register with this email/password combination</mat-error>
       <br>
     }
-    <button mat-fab extended color="primary" type="submit" [disabled]="!registrationForm.valid">Cadastrar-se</button>
+    <button mat-fab extended color="primary" type="submit" [disabled]="!registrationForm.valid" i18n>Register</button>
     <div class="login-link">
-      <a v-allign="center" routerLink="/login">Entrar com uma conta já existente</a>
+      <a v-allign="center" routerLink="/login" i18n>Login with existing account</a>
     </div>
   </form>
 
-  ou <button mat-fab extended (click)="logInWithGoogle()">
+  <ng-container i18n>or</ng-container> <button mat-fab extended (click)="logInWithGoogle()">
     <img src="img/google-logo.svg" class="google-logo" />
-    Entrar com uma conta do Google
+    <ng-container i18n>Login with Google</ng-container>
   </button>
   <br>
 </section>
-  

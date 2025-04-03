@@ -18,6 +18,7 @@ import { PatientService } from './services/patient.service';
 import { ProfessionalService } from './services/professional.service';
 import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
 import { AccessLog } from './interfaces/access-log';
+import { Locale } from './interfaces/locale';
 
 
 @Component({
@@ -48,6 +49,10 @@ export class AppComponent implements OnDestroy {
   private unsubscriptions: Unsubscribe[] = [];
   protected readonly user$ = this.userService.getUserObservable();
   protected links: Link[] = [];
+  protected locales: Locale[] = [
+    { code: 'pt', flag: '🇵🇹' },
+    { code: 'en', flag: '🇺🇸' }
+  ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -64,7 +69,7 @@ export class AppComponent implements OnDestroy {
           const count = patients.filter(access => !access.professionalAcceptedAt).length;
           const badge = count ? count.toString() : '';
           this.links = [
-            {path: "/home-professional", label: "Meus utentes", badge},
+            {path: "/home-professional", label: $localize`My patients`, badge},
           ];
         }));
       } else {
@@ -80,9 +85,9 @@ export class AppComponent implements OnDestroy {
             const logs = patientData['accesses'] || [];
             const unreadLogs = logs.filter((l: AccessLog) => !l.viewedAt).length;
             this.links = [
-              {path: "/home-patient", label: "Meus eventos"},
-              {path: "/patient-professionals", label: "Meus profissionais", badge: positiveOrEmpty(professionalsWaitingAcceptance)},
-              {path: "/patient-logs", label: "Logs de acesso", badge: positiveOrEmpty(unreadLogs)},
+              {path: "/home-patient", label: $localize`My events`},
+              {path: "/patient-professionals", label: $localize`My professionals`, badge: positiveOrEmpty(professionalsWaitingAcceptance)},
+              {path: "/patient-logs", label: $localize`Access log`, badge: positiveOrEmpty(unreadLogs)},
             ];
           }));
         }));
@@ -90,18 +95,22 @@ export class AppComponent implements OnDestroy {
     }));
   }
 
-  ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    this.unsubscriptions.forEach(unsubscribe => unsubscribe());
-  }
-
   isActive(path: string) {
     return this.router.url.includes(path);
+  }
+
+  getCurrentPath() {
+    return this.router.url;
   }
 
   logout() {
     this.authService.logout();
     this.router.navigateByUrl("/login");
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.unsubscriptions.forEach(unsubscribe => unsubscribe());
   }
 }
 

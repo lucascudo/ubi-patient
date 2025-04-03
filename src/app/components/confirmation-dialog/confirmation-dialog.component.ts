@@ -27,7 +27,8 @@ import { DialogData } from '../../interfaces/dialog-data';
 export class ConfirmationDialogComponent {
   readonly dialogRef = inject(MatDialogRef<ConfirmationDialogComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  
+  readonly defaultTitle = $localize`Confirmation Dialog`;
+
   onNoClick(): void {
     this.dialogRef.close();
   }

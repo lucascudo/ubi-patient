@@ -25,5 +25,6 @@ import { DialogData } from '../../interfaces/dialog-data';
 })
 export class AlertDialogComponent {
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  readonly defaultTitle = $localize`Alert`;
 
 }
