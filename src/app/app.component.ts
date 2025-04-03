@@ -50,8 +50,8 @@ export class AppComponent implements OnDestroy {
   protected links: Link[] = [];
   protected readonly user$ = this.userService.getUserObservable();
   protected readonly locales: Locale[] = [
-    { code: 'pt', flag: 'pt', label: 'PT' },
-    { code: 'en', flag: 'us', label: 'EN' }
+    { code: 'pt', flag: 'pt', alt: 'PT', title: 'Português (PT)' },
+    { code: 'en', flag: 'us', alt: 'EN', title: 'English (US)' }
   ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
