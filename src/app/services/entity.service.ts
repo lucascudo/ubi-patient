@@ -35,7 +35,7 @@ export class EntityService {
   }
 
   getEntitiesFromPatient(id: string) {
-    return collectionData(collection(this.firestore, this.entitiesCollectionId), { idField: "id" });
+    return collectionData(collection(this.firestore, `entities-${id}`), { idField: "id" });
   }
 
   addEntity(entity: any) {
