@@ -14,6 +14,7 @@ import { Access } from '../../interfaces/access';
 import { MatTableModule } from '@angular/material/table';
 import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/button-toggle';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-patient-professionals',
@@ -29,6 +30,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    DatePipe
   ],
 })
 export class PatientProfessionalsComponent implements OnInit {

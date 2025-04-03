@@ -6,6 +6,7 @@ import { CryptService } from '../../services/crypt.service';
 import { ProfessionalService } from '../../services/professional.service';
 import { AccessLog } from '../../interfaces/access-log';
 import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-patient-logs',
@@ -13,7 +14,8 @@ import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
   imports: [
     MatTableModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    DatePipe
   ],
   templateUrl: './patient-logs.component.html',
   styleUrl: './patient-logs.component.scss'

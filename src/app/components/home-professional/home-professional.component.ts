@@ -16,6 +16,7 @@ import {MatButtonToggleChange, MatButtonToggleModule} from '@angular/material/bu
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { RouterLink } from '@angular/router';
 import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-professional',
@@ -32,6 +33,7 @@ import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
     FormsModule,
     ReactiveFormsModule,
     RouterLink,
+    DatePipe
   ],
 })
 export class HomeProfessionalComponent implements OnInit {

@@ -11,6 +11,7 @@ import { PatientService } from '../../services/patient.service';
 import { DocumentSnapshot, onSnapshot } from '@angular/fire/firestore';
 import { Access } from '../../interfaces/access';
 import { BasePatient } from '../base-patient/base-patient';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-patient',
@@ -22,6 +23,7 @@ import { BasePatient } from '../base-patient/base-patient';
     MatButtonModule,
     MatIconModule,
     RouterLink,
+    DatePipe
   ],
   templateUrl: './view-patient.component.html',
   styleUrl: './view-patient.component.scss'

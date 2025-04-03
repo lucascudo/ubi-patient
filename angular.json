@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "ubi-patient": {
+      "i18n": {
+        "sourceLocale": "pt-PT"
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {

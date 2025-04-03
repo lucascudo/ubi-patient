@@ -9,6 +9,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { Entity } from '../../interfaces/entity';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-entity-view-dialog',
@@ -22,6 +23,7 @@ import { Entity } from '../../interfaces/entity';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    DatePipe
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

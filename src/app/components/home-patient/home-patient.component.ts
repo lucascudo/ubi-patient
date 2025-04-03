@@ -11,6 +11,7 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ConfigService } from '../../services/config.service';
 import { BasePatient } from '../base-patient/base-patient';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home-patient',
@@ -26,6 +27,7 @@ import { BasePatient } from '../base-patient/base-patient';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    DatePipe
   ]
 })
 export class HomePatientComponent extends BasePatient implements OnInit {
