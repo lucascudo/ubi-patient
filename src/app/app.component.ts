@@ -64,7 +64,7 @@ export class AppComponent implements OnDestroy {
           const count = patients.filter(access => !access.professionalAcceptedAt).length;
           const badge = count ? count.toString() : '';
           this.links = [
-            {path: "/home-professional", label: "Meus pacientes", badge},
+            {path: "/home-professional", label: "Meus utentes", badge},
           ];
         }));
       } else {
