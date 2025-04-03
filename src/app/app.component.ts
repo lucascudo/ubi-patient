@@ -47,11 +47,11 @@ export class AppComponent implements OnDestroy {
   private readonly router = inject(Router);
   private subscriptions: Subscription[] = [];
   private unsubscriptions: Unsubscribe[] = [];
-  protected readonly user$ = this.userService.getUserObservable();
   protected links: Link[] = [];
-  protected locales: Locale[] = [
-    { code: 'pt', flag: '🇵🇹' },
-    { code: 'en', flag: '🇺🇸' }
+  protected readonly user$ = this.userService.getUserObservable();
+  protected readonly locales: Locale[] = [
+    { code: 'pt', flag: 'pt', label: 'PT' },
+    { code: 'en', flag: 'us', label: 'EN' }
   ];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)

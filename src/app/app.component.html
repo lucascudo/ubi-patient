@@ -32,7 +32,7 @@
         <span class="flags-container">
           @for (locale of locales; track locale.code) {
             <a href="/{{ locale.code + getCurrentPath() }}">
-              {{ locale.flag }}
+              <img alt="{{ locale.label }}" src="img/flag-{{ locale.flag }}.png" />
             </a>
           }
         </span>
@@ -49,7 +49,7 @@
     <span class="flags-container">
       @for (locale of locales; track locale.code) {
         <a href="/{{ locale.code + getCurrentPath() }}">
-          {{ locale.flag }}
+          <img alt="{{ locale.label }}" src="img/flag-{{ locale.flag }}.png" />
         </a>
       }
     </span>

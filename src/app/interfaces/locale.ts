@@ -1,4 +1,5 @@
 export interface Locale {
   code: string,
-  flag: string
+  flag: string,
+  label: string
 }
