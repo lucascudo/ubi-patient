@@ -104,8 +104,7 @@ export class AppComponent implements OnDestroy {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigateByUrl("/login");
+    this.authService.logout().then(() => this.router.navigateByUrl("/login"));
   }
 
   ngOnDestroy() {

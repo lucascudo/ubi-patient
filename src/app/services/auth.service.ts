@@ -45,7 +45,7 @@ export class AuthService {
   }
 
   logInWithEmailAndPassword(email: string, password: string, errorHandler: (reason: any) => void) {
-    return signInWithEmailAndPassword(this.auth, email, password).then(this.afterLogin).catch(errorHandler);
+    signInWithEmailAndPassword(this.auth, email, password).then(this.afterLogin).catch(errorHandler);
   }
 
   createUser(email: string, password: string, errorHandler: (reason: any) => void) {
@@ -59,7 +59,7 @@ export class AuthService {
     this.router.navigateByUrl(`/home-${ isProfessional ? "professional" : "patient" }`);
   }
 
-  async logout() {
-    return await signOut(this.auth);
+  logout() {
+    return signOut(this.auth);
   }
 }
