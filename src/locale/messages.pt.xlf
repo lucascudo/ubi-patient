@@ -62,6 +62,10 @@
           <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
@@ -79,6 +83,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
           <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>

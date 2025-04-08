@@ -62,6 +62,10 @@
           <context context-type="linenumber">53</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>
           <context context-type="linenumber">47</context>
         </context-group>
@@ -79,6 +83,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
           <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>
@@ -308,14 +316,14 @@
         <source>Remove <x id="PH" equiv-text="article"/> <x id="PH_1" equiv-text="entity.type"/>: <x id="PH_2" equiv-text="entity.name"/>?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6792746130452495810" datatype="html">
         <source>Removal Confirmation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.ts</context>
@@ -486,11 +494,11 @@
         <source>Login with Google</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/login/login.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4503112627613007426" datatype="html">
