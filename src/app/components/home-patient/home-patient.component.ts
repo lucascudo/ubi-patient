@@ -106,8 +106,7 @@ export class HomePatientComponent extends BasePatient implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    let article = 'the'
-    console.log($localize.locale);
+    let article = 'the';
     if ($localize.locale === 'pt') {
       article = this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
     }
