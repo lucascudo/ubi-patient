@@ -26,7 +26,7 @@ export class ConfigService {
   }
 
   getEntityTypes() {
-    return this.getConfigById('entityTypes');
+    return this.getConfigById(($localize.locale === 'en') ? 'entityTypesEN' : 'entityTypes');
   }
 
 }
