@@ -47,6 +47,6 @@ export class EntityService {
 
   deleteEntity(entity: any) {
     const target = `${this.entitiesCollectionId}/${entity.id}`;
-    deleteDoc(doc(this.firestore, target)).then(() => this.loggerService.log(ACTION_TYPES.CREATED, `entity ${target}`));
+    deleteDoc(doc(this.firestore, target)).then(() => this.loggerService.log(ACTION_TYPES.DELETED, `entity ${target}`));
   }
 }

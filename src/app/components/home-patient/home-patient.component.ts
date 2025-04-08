@@ -106,7 +106,11 @@ export class HomePatientComponent extends BasePatient implements OnInit {
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];
-    const article = this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
+    let article = 'the'
+    console.log($localize.locale);
+    if ($localize.locale === 'pt') {
+      article = this.entityTypes[entity.type].isMasculine ? 'o' : 'a';
+    }
     const content = $localize`Remove ${article} ${entity.type}\: ${entity.name}?`;
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: $localize`Removal Confirmation`, content },
