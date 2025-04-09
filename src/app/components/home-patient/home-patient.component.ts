@@ -42,7 +42,7 @@ export class HomePatientComponent extends BasePatient implements OnInit {
     description: new FormControl('', Validators.maxLength(500)),
     name: new FormControl('', [
       Validators.required,
-      Validators.maxLength(50),
+      Validators.maxLength(50)
     ]),
     timestamp: new FormControl('', [
       Validators.required,
@@ -51,7 +51,7 @@ export class HomePatientComponent extends BasePatient implements OnInit {
         return isFuture ? { future: {value: control.value} } : null;
       }
     ]),
-    image: new FormControl(),
+    image: new FormControl()
   });
 
   ngOnInit() {
@@ -82,6 +82,11 @@ export class HomePatientComponent extends BasePatient implements OnInit {
     return new Promise((resolve, reject) => {
       reader.onload = () => {
         const base64Image = reader.result as string;
+        if (new Blob([base64Image]).size > 1048487) {
+          const error = $localize`Unsupported image size`;
+          alert(error);
+          return reject(error);
+        }
         const entityWithImage = {
           ...entity,
           image: base64Image,
