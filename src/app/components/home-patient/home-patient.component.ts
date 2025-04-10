@@ -34,6 +34,7 @@ export class HomePatientComponent extends BasePatient implements OnInit {
   private readonly breakpointObserver = inject(BreakpointObserver);
   private readonly entityService = inject(EntityService);
   private readonly configService = inject(ConfigService);
+  private readonly maxImageStringSize = 1048487;
   protected today = new Date();
   protected entityTypes: any = {};
   protected readonly _object = Object;
@@ -51,7 +52,9 @@ export class HomePatientComponent extends BasePatient implements OnInit {
         return isFuture ? { future: {value: control.value} } : null;
       }
     ]),
-    image: new FormControl()
+    image: new FormControl(null, (control: AbstractControl): ValidationErrors | null => {
+      return ((control.value?.size * 1.333) > this.maxImageStringSize) ? { tooBig: {value: control.value} } : null;
+    })
   });
 
   ngOnInit() {
@@ -82,8 +85,8 @@ export class HomePatientComponent extends BasePatient implements OnInit {
     return new Promise((resolve, reject) => {
       reader.onload = () => {
         const base64Image = reader.result as string;
-        if (new Blob([base64Image]).size > 1048487) {
-          const error = $localize`Unsupported image size`;
+        if (new Blob([base64Image]).size > this.maxImageStringSize) {
+          const error = $localize`Unsupported image size, maximum is 768 KB`;
           alert(error);
           return reject(error);
         }
@@ -97,17 +100,13 @@ export class HomePatientComponent extends BasePatient implements OnInit {
         }).catch(reject);
       };
       reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(entity.image);
+      reader.readAsDataURL(entity.image!);
     });
   }
 
   onFileChange(event: any) {
-    const image = event.target.files[0];
-    if (image) {
-      this.entityForm.patchValue({ image });
-    }
+    this.entityForm.patchValue({ image: event.target.files[0] ?? null });
   }
-
 
   openDeletionDialog(index: number): void {
     const entity = this.dataSource[index];

@@ -48,6 +48,9 @@
     <div class="file-input">
       <label for="file-upload" i18n>Image</label>
       <input id="file-upload" #fileInput type="file" accept="image/*" (change)="onFileChange($event)" />
+      @if (entityForm.get('image')?.hasError('tooBig')) {
+        <mat-error i18n>Unsupported image size, maximum is 768 KB</mat-error>
+      }
     </div>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="!entityForm.valid" i18n>Add</button>

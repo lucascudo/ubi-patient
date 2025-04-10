@@ -116,11 +116,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">86,87</context>
+          <context context-type="linenumber">89,90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-patient/view-patient.component.html</context>
@@ -153,7 +153,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">65,66</context>
+          <context context-type="linenumber">68,69</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-patient/view-patient.component.html</context>
@@ -175,7 +175,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">71,72</context>
+          <context context-type="linenumber">74,75</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-patient/view-patient.component.html</context>
@@ -197,7 +197,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">76,77</context>
+          <context context-type="linenumber">79,80</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-logs/patient-logs.component.html</context>
@@ -209,7 +209,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7681790786330751077" datatype="html">
-        <source>Dat é mandatória</source>
+        <source>Data é mandatória</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
           <context context-type="linenumber">35</context>
@@ -230,18 +230,29 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">81,82</context>
+          <context context-type="linenumber">84,85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-patient/view-patient.component.html</context>
           <context context-type="linenumber">33,34</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8505386428947575615" datatype="html">
+        <source>Tamanho de imagem não suportado, o máximo é 768 KB</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
+          <context context-type="linenumber">89</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3249513483374643425" datatype="html">
         <source>Adicionar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">56,57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>
@@ -252,7 +263,7 @@
         <source>Filtrar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-logs/patient-logs.component.html</context>
@@ -271,7 +282,7 @@
         <source>Ações</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">98,99</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
@@ -290,7 +301,7 @@
         <source>Detalhes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/view-patient/view-patient.component.html</context>
@@ -301,7 +312,7 @@
         <source>Remover</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">103</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.html</context>
@@ -312,25 +323,18 @@
           <context context-type="linenumber">70</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4026549191598271990" datatype="html">
-        <source>Tamanho de imagem não suportado</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="8436351930516314975" datatype="html">
         <source>Remover <x id="PH" equiv-text="article"/> <x id="PH_1" equiv-text="entity.type"/>: <x id="PH_2" equiv-text="entity.name"/>?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6792746130452495810" datatype="html">
         <source>Confirmação de Remoção</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.ts</context>
-          <context context-type="linenumber">120</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-professional/home-professional.component.ts</context>
