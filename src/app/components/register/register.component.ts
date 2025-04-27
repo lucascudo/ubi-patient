@@ -25,7 +25,7 @@ export class RegisterComponent {
   private readonly authService = inject(AuthService);
   protected readonly registrationForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     passwordConfirmation: new FormControl('', [Validators.required]),
   }, { validators: passwordConfirmationValidator });
   protected registrationError = false;
@@ -35,9 +35,9 @@ export class RegisterComponent {
   }
   
   registerWithEmailAndPassword(email: string, password: string) {
-    this.authService.createUser(email, password, (reason: any) => {
+    this.authService.createUser(email, password, ({ message }) => {
       this.registrationError = true;
-      throw Error(reason);
+      throw Error(message);
     });
   }
 }

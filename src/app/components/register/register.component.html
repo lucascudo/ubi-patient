@@ -12,12 +12,16 @@
       <mat-label i18n>Password Confirmation</mat-label>
       <input type="password" matInput formControlName="passwordConfirmation">
     </mat-form-field>
+    @if (registrationForm.get('password')?.hasError('minlength')) {
+      <mat-error i18n>Password must contain at least 6 characters</mat-error>
+      <br>
+    }
     @if (registrationForm.hasError('passwordsDontMatch')) {
       <mat-error i18n>The “Password” and “Password Confirmation” fields must be equals</mat-error>
       <br>
     }
     @if (registrationError) {
-      <mat-error i18n>It was not possible to register with this email/password combination</mat-error>
+      <mat-error i18n>It was not possible to register with this email/password combination. You must use a valid email address that has never been registered before.</mat-error>
       <br>
     }
     <button mat-fab extended color="primary" type="submit" [disabled]="!registrationForm.valid" i18n>Register</button>

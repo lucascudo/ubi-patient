@@ -498,7 +498,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8999284073934392732" datatype="html">
@@ -509,7 +509,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4503112627613007426" datatype="html">
@@ -568,32 +568,39 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9033773411584360398" datatype="html">
-        <source>The “Password” and “Password Confirmation” fields must be equals</source>
+      <trans-unit id="3686190291700135804" datatype="html">
+        <source>Password must contain at least 6 characters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5241078444511513212" datatype="html">
-        <source>It was not possible to register with this email/password combination</source>
+      <trans-unit id="9033773411584360398" datatype="html">
+        <source>The “Password” and “Password Confirmation” fields must be equals</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
           <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1394229184030124024" datatype="html">
+        <source>It was not possible to register with this email/password combination. You must use a valid email address that has never been registered before.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/register/register.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3301086086650990787" datatype="html">
         <source>Register</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
-          <context context-type="linenumber">23,24</context>
+          <context context-type="linenumber">27,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2632888371294493168" datatype="html">
         <source>Login with existing account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
-          <context context-type="linenumber">25,26</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8890553633144307762" datatype="html">
