@@ -25,10 +25,6 @@ export class UserService {
     return this.user$;
   }
 
-  getUserFirstValue(): Promise<User | null> {
-    return firstValueFrom(this.getUserObservable());
-  }
-
   logAuth(user: User, isProfessional: boolean) {
     const now = new Date();
     let userDocument;

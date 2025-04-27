@@ -55,7 +55,7 @@ export class PatientProfessionalsComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.userService.getUserFirstValue().then(user => {
+    this.userService.getUserObservable().subscribe(user => {
       if (!user) return;
       const userId = user.uid;
       const interval = setInterval(() => {

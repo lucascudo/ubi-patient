@@ -98,7 +98,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="8909463345267903362" datatype="html">
-        <source>Confirmation Dialog</source>
+        <source>Diálogo de Confirmação</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/confirmation-dialog/confirmation-dialog.component.ts</context>
           <context context-type="linenumber">30</context>
