@@ -582,7 +582,7 @@
           <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1394229184030124024" datatype="html">
+      <trans-unit id="734301948383661661" datatype="html">
         <source>Não foi possível realizar o cadastro com esta combinação de email/palavra-passe</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/register/register.component.html</context>
