@@ -1,0 +1,56 @@
+<section class="container">
+    <h4 i18n>Event Registration</h4>
+  
+    <form [formGroup]="entityForm" #formDirective="ngForm" (ngSubmit)="addEntity(formDirective, fileInput)" class="entity-form">
+      <mat-form-field appearance="outline">
+        <mat-label i18n>Type</mat-label>
+        <mat-select formControlName="type">
+          @for (type of _object.keys(entityTypes).sort(); track type) {
+            <mat-option [value]="type">
+              {{type}}
+            </mat-option>
+          }
+        </mat-select>
+  
+        @if (entityForm.get('type')?.hasError('required')) {
+          <mat-error i18n>Type is mandatory</mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label i18n>Name</mat-label>
+        <input matInput formControlName="name" maxlength="50"/>
+        <mat-hint align="end">{{entityForm.value.name?.length}} / 50</mat-hint>
+  
+        @if (entityForm.get('name')?.hasError('required')) {
+          <mat-error i18n>Name is mandatory</mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label i18n>Date</mat-label>
+        <input matInput formControlName="timestamp" type="datetime-local" onfocus="this.showPicker()"/>
+  
+        @if (entityForm.get('timestamp')?.hasError('required')) {
+          <mat-error i18n>Date is mandatory</mat-error>
+        }
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label i18n>Description</mat-label>
+        <textarea matInput formControlName="description" maxlength="500"></textarea>
+        <mat-hint align="end">{{entityForm.value.description?.length}} / 500</mat-hint>
+      </mat-form-field>
+  
+      <div class="file-input">
+        <label for="file-upload" i18n>Image</label>
+        <input id="file-upload" #fileInput type="file" accept="image/*" (change)="onFileChange($event)" />
+        @if (entityForm.get('image')?.hasError('tooBig')) {
+          <mat-error i18n>Unsupported image size, maximum is 680 KB</mat-error>
+        }
+      </div>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!entityForm.valid" i18n>Add</button>
+    </form>
+  </section>
+  

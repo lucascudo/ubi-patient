@@ -11,7 +11,6 @@ import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Unsubscribe } from '@angular/fire/auth';
-import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { Link } from './interfaces/link';
 import { PatientService } from './services/patient.service';
@@ -40,7 +39,6 @@ import { Locale } from './interfaces/locale';
 })
 export class AppComponent implements OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
-  private readonly authService = inject(AuthService);
   private readonly userService = inject(UserService);
   private readonly patientService = inject(PatientService);
   private readonly professionalService = inject(ProfessionalService);
@@ -86,7 +84,8 @@ export class AppComponent implements OnDestroy {
             const unreadLogs = logs.filter((l: AccessLog) => !l.viewedAt).length;
             this.links = [
               {path: "/home-patient", label: $localize`My events`},
-              {path: "/patient-professionals", label: $localize`My professionals`, badge: positiveOrEmpty(professionalsWaitingAcceptance)},
+              {path: "/create-entity", label: $localize`New event`},
+              {path: "/patient-professionals", label: $localize`My caregivers`, badge: positiveOrEmpty(professionalsWaitingAcceptance)},
               {path: "/patient-logs", label: $localize`Access log`, badge: positiveOrEmpty(unreadLogs)},
             ];
           }));
@@ -104,10 +103,8 @@ export class AppComponent implements OnDestroy {
   }
 
   logout() {
-    this.authService.logout().then(() => {
-      this.unsubscribeAll();
-      this.router.navigateByUrl("/login").then(() => location.reload());
-    });
+    this.unsubscribeAll();
+    this.router.navigateByUrl("/logout");
   }
 
   ngOnDestroy() {

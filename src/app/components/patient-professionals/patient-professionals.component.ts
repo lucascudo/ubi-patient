@@ -86,7 +86,7 @@ export class PatientProfessionalsComponent implements OnInit {
     }
     if (!await this.userService.isUserProfessional(email)) {
       this.dialog.open(AlertDialogComponent, {
-        data: { content: $localize`No professionals were found with the email\: ${email}` },
+        data: { content: $localize`No caregivers were found with the email\: ${email}` },
       });
       return;
     }

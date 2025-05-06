@@ -3,19 +3,8 @@
   max-width: 1024px;
 }
 
-.entity-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.mat-form-field {
+.search-input {
   width: 100%;
-}
-
-button {
-  align-self: flex-start;
 }
 
 .mat-elevation-z8 {
@@ -34,20 +23,6 @@ button {
   white-space: nowrap;
 }
 
-.file-input {
-  margin-bottom: 20px;
-}
-
-.file-input label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.file-input input[type="file"] {
-  display: block;
-}
-
-.search-input {
-  width: 100%;
+.highlight {
+  background-color: #EEE;
 }

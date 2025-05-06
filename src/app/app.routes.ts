@@ -8,11 +8,16 @@ import { PatientProfessionalsComponent } from './components/patient-professional
 import { ViewPatientComponent } from './components/view-patient/view-patient.component';
 import { PatientLogsComponent } from './components/patient-logs/patient-logs.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CreateEntityComponent } from './components/create-entity/create-entity.component';
+import { unsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { LogoutComponent } from './components/logout/logout.component';
 
 export const routes: Routes = [
-  {path: 'login', component: LoginComponent,canActivate: [loginGuard]},
-  {path: 'register', component: RegisterComponent,canActivate: [loginGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [loginGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [loginGuard]},
+  {path: 'logout', component: LogoutComponent, canActivate: [authGuard]},
   {path: 'home-patient', component: HomePatientComponent, canActivate: [authGuard], data: { role: 'patient' }},
+  {path: 'create-entity', component: CreateEntityComponent, canActivate: [authGuard], canDeactivate: [unsavedChangesGuard], data: { role: 'patient' }},
   {path: 'patient-professionals', component: PatientProfessionalsComponent, canActivate: [authGuard], data: { role: 'patient' }},
   {path: 'patient-logs', component: PatientLogsComponent, canActivate: [authGuard], data: { role: 'patient' }},
   {path: 'home-professional', component: HomeProfessionalComponent, canActivate: [authGuard], data: { role: 'professional' }},
