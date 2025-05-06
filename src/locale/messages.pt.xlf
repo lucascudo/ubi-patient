@@ -545,7 +545,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4602311177682088938" datatype="html">
-        <source>Conceder Acesso a cuidador</source>
+        <source>Conceder Acesso a Cuidadores</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/patient-professionals/patient-professionals.component.html</context>
           <context context-type="linenumber">2,4</context>
