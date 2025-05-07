@@ -115,8 +115,8 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4925365318254850730" datatype="html">
-        <source>Cadastro de Eventos</source>
+      <trans-unit id="1686552718169076158" datatype="html">
+        <source>Novo Evento</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/create-entity/create-entity.component.html</context>
           <context context-type="linenumber">2,4</context>
@@ -264,7 +264,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5729418620241283277" datatype="html">
-        <source>Events</source>
+        <source>Eventos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/home-patient/home-patient.component.html</context>
           <context context-type="linenumber">2,4</context>
