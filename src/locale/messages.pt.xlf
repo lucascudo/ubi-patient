@@ -633,7 +633,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7978464307296909824" datatype="html">
-        <source>You have unsaved changes. Are you sure you want to leave?</source>
+        <source>Tem alterações que não foram salvas. Tem a certeza de que quer sair?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/guards/unsaved-changes.guard.ts</context>
           <context context-type="linenumber">10</context>
