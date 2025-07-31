@@ -1,5 +1,7 @@
 # UBI-PATIENT
 
+[Master's Dissertation in Computer Science & Engineering.](https://github.com/lucascudo/ubi-patient/blob/main/MEI_dissertacao_signed.pdf)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
 
 ## Setup
